@@ -6,7 +6,6 @@ template.innerHTML = `
 
 <nav class="navbar has-shadow is-info is-dark">
 <div class="navbar-brand">
-<img src="favicon.ico" alt="icon">
   <a class="navbar-burger" id="burger">
     <span></span>
     <span></span>
@@ -31,3 +30,40 @@ template.innerHTML = `
 </div>
 </nav>
 `;
+
+class AudioNav extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({mode:"open"});
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
+    }
+
+    connectedCallback() {
+        const burgerIcon = this.shadowRoot.querySelector("#burger");
+        const navbarMenu = this.shadowRoot.querySelector("#nav-links");
+        
+        let curUrl = window.location.href;
+        let url = curUrl.split("/");
+        let navLinks = this.shadowRoot.querySelectorAll(".navbar-item");
+
+        switch ("./" + url[url.length - 1]) {
+            case "./index.html" :
+                navLinks[0].classList.add("has-text-weight-bold");
+                break;
+            case "./app.html" :
+                navLinks[1].classList.add("has-text-weight-bold");
+                break;
+            case "./documentation.html" :
+                navLinks[2].classList.add("has-text-weight-bold");
+                break;
+            default:
+                break;
+        }
+
+        burgerIcon.addEventListener('click', () => {
+            navbarMenu.classList.toggle('is-active');
+        });
+    }
+}
+
+customElements.define('av-nav', AudioNav);
