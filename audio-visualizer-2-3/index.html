@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Audio Visualizer</title>
+	<link href="styles/default-styles.css" type="text/css" rel="stylesheet" />
+	<script src="./src/loader.js" type="module"></script>
+</head>
+<body>
+<main>
+	<canvas width="800" height="400"></canvas>
+	<div id="controls">
+		<section>
+			<button id="play-button" data-playing="no"></button>
+			<button id="fsButton">Full Screen</button>
+			
+			<label>Track: 
+				<select id="track-select">
+					<option value="media/New Adventure Theme.mp3" selected>New Adventure Theme</option>
+					<option value="media/Peanuts Theme.mp3">Peanuts Theme</option>
+					<option value="media/The Picard Song.mp3">The Picard Song</option>
+				</select>
+			</label>
+		</section>
+		
+		<section>
+			<input type="checkbox" name="show-gradient" id="chk-gradient">
+			<label for="chk-gradient">Show Gradient</label>
+			<input type="checkbox" name="show-bars" id="chk-bars">
+			<label for="chk-bars">Show Bars</label>
+			<input type="checkbox" name="show-circles" id="chk-circles">
+			<label for="chk-circles">Show Circles</label>
+			<input type="checkbox" name="show-noise" id="chk-noise">
+			<label for="chk-noise">Show Noise</label>
+			<input type="checkbox" name="show-invert" id="chk-invert">
+			<label for="chk-invert">Invert Colors</label>
+			<input type="checkbox" name="show-emboss" id="chk-emboss">
+			<label for="chk-emboss">Emboss</label>
+		</section>
+
+		<section>
+			Volume: <input type="range" id="volume-slider" min="0" max="2" value="1" step="0.01">
+			<span id="volume-label">???</span>
+		</section>
+	</div>
+</main>
+</body>
+</html>
