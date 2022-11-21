@@ -1,5 +1,3 @@
-
-
 import * as utils from './utils.js';
 import * as audio from './audio.js';
 import * as canvas from './canvas.js';
@@ -8,22 +6,23 @@ const drawParams = {
     showGradient    : true,
     showBars        : true,
     showCircles     : true,
-    showNoise       : true,
-    showInvert      : true,
-    showEmboss      : true
+    showNoise       : false,
+    showInvert      : false,
+    showEmboss      : false,
+    showScope       : true
 };
 
 // 1 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
-	sound1  :  "./media/New Adventure Theme.mp3"
+	sound1  :  "./media/adventure.mp3"
 });
 
 function init(){
-	console.log("init called");
+	//console.log("init called");
 
-    audio.setupWebAudio(DEFAULTS.sound1);
+    audio.setupWebAudio("./media/adventure.mp3");
 
-	console.log(`Testing utils.getRandomColor() import: ${utils.getRandomColor()}`);
+	//console.log(`Testing utils.getRandomColor() import: ${utils.getRandomColor()}`);
 	let canvasElement = document.querySelector("canvas"); // hookup <canvas> element
 	setupUI(canvasElement);
 
@@ -45,14 +44,16 @@ function setupUI(canvasElement){
     let noiseCheckbox = document.querySelector("#chk-noise");
     let invertCheckbox = document.querySelector("#chk-invert");
     let embossCheckbox = document.querySelector("#chk-emboss");
+    let scopeCheckbox = document.querySelector("#chk-scope");
 
     // visualizer toggles
     gradientCheckbox.checked = true;
     barsCheckbox.checked = true;
     circlesCheckbox.checked = true;
-    noiseCheckbox.checked = true;
-    invertCheckbox.checked = true;
-    embossCheckbox.checked = true;
+    noiseCheckbox.checked = false;
+    invertCheckbox.checked = false;
+    embossCheckbox.checked = false;
+    scopeCheckbox.checked = true;
 
     // fullscreen
     fsButton.onclick = e => {
@@ -87,6 +88,7 @@ function setupUI(canvasElement){
     volumeSlider.dispatchEvent(new Event("input"));
     // track selector
     trackSelect.onchange = e => {
+        
         audio.loadSoundFile(e.target.value);
         // pause current track if playing
         if (playButton.dataset.playing == "yes") {
@@ -118,7 +120,7 @@ function setupUI(canvasElement){
 function loop(){
     requestAnimationFrame(loop);
         
-    canvas.draw(drawParams);
+    canvas.draw(drawParams, audio.analyserNode);
 }
 
 export {init};

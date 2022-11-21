@@ -1,5 +1,4 @@
 
-
 import * as utils from './utils.js';
 
 let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
@@ -34,8 +33,6 @@ function draw(params={}){
         ctx.fillRect(0,0,canvasWidth, canvasHeight);
         ctx.restore();
     }
-
-
     if (params.showBars) {
         let barSpacing = 4;
         let margin = 5;
@@ -54,7 +51,6 @@ function draw(params={}){
         }
         ctx.restore();
     }
-	
     if (params.showCircles) {
         let maxRadius = canvasHeight/4;
         ctx.save();
@@ -84,9 +80,12 @@ function draw(params={}){
             ctx.closePath();
             ctx.restore();
         }
+
+        // oh silly scope
+        osciliscope();
+
         ctx.restore();
     }
-
 
 	let imageData = ctx.getImageData(0,0, canvasWidth, canvasHeight);
     let data = imageData.data;
@@ -124,6 +123,97 @@ function draw(params={}){
 	// D) copy image data back to canvas
     ctx.putImageData(imageData,0,0);
 
+}
+
+// random color from canvas hw
+function getRandomColor(){
+    function getByte(){
+        return 55 + Math.round(Math.random() * 200);
+    }
+    return "rgba(" + getByte() + "," + getByte() + "," + getByte() + ",.8)";
+}
+// canvas onclick
+function canvasClicked(e){
+    let rect = e.target.getBoundingClientRect();
+    let mouseX = e.clientX - rect.x;
+    let mouseY = e.clientY - rect.y;
+    console.log(mouseX,mouseY);
+    for (let i = 0; i < 10; i++) {
+        let x = getRandomInt(-50,50) + mouseX;
+        let y = getRandomInt(-50,50) + mouseY;
+        let radius = getRandomInt(5,45);
+        let color = getRandomColor();
+        drawArc(ctx,x,y,radius,0,(Math.PI * 2),color);
+    }
+}
+// helper funcs
+function drawRectangle(ctx, x, y, width, height, fillStyle="black", lineWidth=0, strokeStyle="black") {
+    ctx.save();
+    ctx.fillStyle = fillStyle;
+    ctx.beginPath();
+
+    ctx.rect(x,y,width,height);
+    ctx.fill();
+    if (lineWidth > 0) {
+        ctx.lineWidth = lineWidth;
+        ctx.strokeStyle = strokeStyle;
+        ctx.stroke();
+    }
+
+    ctx.closePath();
+    ctx.restore();
+}
+function drawArc(ctx, x, y, radius, startAngle=0, endAngle=(Math.PI * 2), fillStyle="black", lineWidth=0, strokeStyle="black") {
+    ctx.save();
+    ctx.fillStyle = fillStyle;
+    ctx.beginPath();
+
+    ctx.arc(x,y,radius,startAngle,endAngle,false);
+    ctx.fill();
+    if (lineWidth > 0) {
+        ctx.lineWidth = lineWidth;
+        ctx.strokeStyle = strokeStyle;
+        ctx.stroke();
+    }
+
+    ctx.closePath();
+    ctx.restore();
+}
+function drawLine(ctx, x1, y1, x2, y2, lineWidth=1, strokeStyle="black") {
+    ctx.save();
+    ctx.strokeStyle = strokeStyle;
+    ctx.lineWidth = lineWidth;
+    ctx.beginPath();
+
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x2,y2);
+
+    ctx.closePath();
+    ctx.stroke();
+    ctx.restore();
+}
+// draw osciliscope
+function osciliscope() {
+    // https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Visualizations_with_Web_Audio_API
+    let bufferLength = analyserNode.frequencyBinCount;
+    analyserNode.getByteTimeDomainData(audioData);
+    let slice = canvasWidth / bufferLength;
+    let x = 0;
+
+    for (let i = 0; i < bufferLength; i++) {
+        const v = audioData[i] / 128.0;
+        const y = v * (canvasHeight / 2);
+      
+        if (i === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      
+        x += slice;
+    }
+    ctx.lineTo(canvasWidth, canvasHeight / 2);
+    ctx.stroke();
 }
 
 export {setupCanvas,draw};

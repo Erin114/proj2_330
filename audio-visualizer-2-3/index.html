@@ -1,48 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<title>Audio Visualizer</title>
-	<link href="styles/default-styles.css" type="text/css" rel="stylesheet" />
-	<script src="./src/loader.js" type="module"></script>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    
+    <script type="module" src="src/nav-template.js"></script>
+	
+	<title>Audio Visualizer Home</title>
 </head>
 <body>
-<main>
-	<canvas width="800" height="400"></canvas>
-	<div id="controls">
-		<section>
-			<button id="play-button" data-playing="no"></button>
-			<button id="fsButton">Full Screen</button>
-			
-			<label>Track: 
-				<select id="track-select">
-					<option value="media/New Adventure Theme.mp3" selected>New Adventure Theme</option>
-					<option value="media/Peanuts Theme.mp3">Peanuts Theme</option>
-					<option value="media/The Picard Song.mp3">The Picard Song</option>
-				</select>
-			</label>
-		</section>
-		
-		<section>
-			<input type="checkbox" name="show-gradient" id="chk-gradient">
-			<label for="chk-gradient">Show Gradient</label>
-			<input type="checkbox" name="show-bars" id="chk-bars">
-			<label for="chk-bars">Show Bars</label>
-			<input type="checkbox" name="show-circles" id="chk-circles">
-			<label for="chk-circles">Show Circles</label>
-			<input type="checkbox" name="show-noise" id="chk-noise">
-			<label for="chk-noise">Show Noise</label>
-			<input type="checkbox" name="show-invert" id="chk-invert">
-			<label for="chk-invert">Invert Colors</label>
-			<input type="checkbox" name="show-emboss" id="chk-emboss">
-			<label for="chk-emboss">Emboss</label>
-		</section>
+	<av-nav></av-nav>
 
-		<section>
-			Volume: <input type="range" id="volume-slider" min="0" max="2" value="1" step="0.01">
-			<span id="volume-label">???</span>
-		</section>
-	</div>
-</main>
+	<section class="section">
+		<div class="container">
+		<div class="columns is-vcentered">
+		<div class="column">  
+		<div class="hero is-large is-white p-2">
+			<div class="hero-head">
+				<p class="title">
+					Audio Visualizer
+				</p>
+				<p class="subtitle">
+					Moss Limpert & Erin Ford's audio visualizer for IGME 330.
+				</p>
+				</div>
+		</div>
+		</div>
+		</div>
+		</div>
+	  </section>
 </body>
 </html>

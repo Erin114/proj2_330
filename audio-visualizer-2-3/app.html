@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Audio Visualizer</title>
+	<link href="styles/default-styles.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    
+    <script type="module" src="src/nav-template.js"></script>
+	<script src="./src/loader.js" type="module"></script>
+</head>
+<body>
+<main>
+	<av-nav></av-nav>
+	<canvas width="800" height="400"></canvas>
+	<div class="content" id="controls">
+		<section>
+			<button class="button" id="play-button" data-playing="no"></button>
+			<button class="button" id="fsButton">Full Screen</button>
+			
+			<label>Track: 
+				<div class="dropdown is-active" id="track-select">
+				<div class="dropdown-menu">
+					<select class="dropdown-content">
+						<option class="dropdown-item" value="media/adventure.mp3" selected>New Adventure Theme</option>
+						<option class="dropdown-item" value="media/Peanuts Theme.mp3">Peanuts Theme</option>
+						<option class="dropdown-item" value="media/The Picard Song.mp3">The Picard Song</option>
+					</select>
+				</div>	
+			</div>
+			</label>
+		</section>
+		
+		<section>
+			<h2>Visual Effects</h2>
+			<input class="checkbox" type="checkbox" name="show-gradient" id="chk-gradient">
+			<label for="chk-gradient">Show Gradient</label>
+			<input class="checkbox" type="checkbox" name="show-bars" id="chk-bars">
+			<label for="chk-bars">Show Bars</label>
+			<input class="checkbox" type="checkbox" name="show-circles" id="chk-circles">
+			<label for="chk-circles">Show Circles</label>
+			<input class="checkbox" type="checkbox" name="show-noise" id="chk-noise">
+			<label for="chk-noise">Show Noise</label>
+			<input class="checkbox" type="checkbox" name="show-invert" id="chk-invert">
+			<label for="chk-invert">Invert Colors</label>
+			<input class="checkbox" type="checkbox" name="show-emboss" id="chk-emboss">
+			<label for="chk-emboss">Emboss</label>
+			<input type="checkbox" name="show-osciliscope" id="chk-scope">
+			<label for="chk-scope">Osciliscope</label>
+		</section>
+
+		<section>
+			<h2>Sound Effects</h2>
+			Volume: <input type="range" id="volume-slider" min="0" max="2" value="1" step="0.01">
+			<span id="volume-label">???</span>
+			<br>
+			<label for="chk-delay">Delay</label>
+			<input type="checkbox" name="delay" id="chk-delay">
+		</section>
+	</div>
+</main>
+</body>
+</html>

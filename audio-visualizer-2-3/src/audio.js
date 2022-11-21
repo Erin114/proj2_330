@@ -20,11 +20,11 @@ function setupWebAudio(filePath) {
 
     element = new Audio();
 
-    //loadSoundFile(filePath);
+    loadSoundFile(filePath);
 
-    sourceNode = audioCtx.createMediaElementSource(getLocalStream());
+    //sourceNode = audioCtx.createMediaElementSource(getLocalStream());
 
-    
+    sourceNode = audioCtx.createMediaElementSource(element);
 
     analyserNode = audioCtx.createAnalyser();
 
