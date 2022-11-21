@@ -26,6 +26,9 @@ function draw(params={}){
     ctx.fillRect(0,0,canvasWidth,canvasHeight);
     ctx.restore();
 	
+    //
+    // TOGGLES
+    // 
 	if (params.showGradient){
         ctx.save();
         ctx.fillStyle = gradient;
@@ -81,17 +84,22 @@ function draw(params={}){
             ctx.restore();
         }
 
-        // oh silly scope
-        osciliscope();
+        
 
         ctx.restore();
     }
+    if(params.showScope) {
+        // oh silly scope
+        osciliscope();
+    }
 
+    //
+    // IMAGE DATA MANIP
+    //
 	let imageData = ctx.getImageData(0,0, canvasWidth, canvasHeight);
     let data = imageData.data;
     let length = data.length;
     let width = imageData.width;
-    
     for (let i = 0; i < length; i += 4) {
         if (params.showNoise && Math.random() < 0.1) {
 	
@@ -112,8 +120,7 @@ function draw(params={}){
         }
 
         
-	} // end for
-	
+	} 
     if (params.showEmboss) {
         for (let i = 0; i < length; i++) {
             if (i%4 == 3) continue;

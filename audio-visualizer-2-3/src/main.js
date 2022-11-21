@@ -35,6 +35,7 @@ function init(){
 function setupUI(canvasElement){
     const fsButton = document.querySelector("#fsButton");
     const playButton = document.querySelector("#play-button");
+    const fileInput = document.querySelector("#file-input");
     let volumeSlider = document.querySelector("#volume-slider");
     let volumeLabel = document.querySelector("#volume-label");
     let trackSelect = document.querySelector("#track-select");
@@ -94,6 +95,19 @@ function setupUI(canvasElement){
         if (playButton.dataset.playing == "yes") {
             playButton.dispatchEvent(new MouseEvent("click"));
         }
+    }
+    fileInput.onchange = e => {
+        console.log("here");
+        audio.loadSoundFile(e.target.files[0]);
+        // pause current track if playing
+        if (playButton.dataset.playing == "yes") {
+            playButton.dispatchEvent(new MouseEvent("click"));
+        }
+        // add it to the dropdown
+        let newFileOption = document.createElement("option");
+        newFileOption.value = e.target.files[0];
+        newFileOption.innerHTML = e.target.files[0];
+        trackSelect.appendChild = newFileOption;
     }
     // toggle change events (for draw params)
     gradientCheckbox.onchange = e => {

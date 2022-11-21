@@ -5,7 +5,8 @@
 	<title>Audio Visualizer</title>
 	<link href="styles/default-styles.css" type="text/css" rel="stylesheet" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   
     <script type="module" src="src/nav-template.js"></script>
 	<script src="./src/loader.js" type="module"></script>
 </head>
@@ -21,7 +22,7 @@
 			<label>Track: 
 				<div class="dropdown is-active" id="track-select">
 				<div class="dropdown-menu">
-					<select class="dropdown-content">
+					<select class="dropdown-content" id="track-select">
 						<option class="dropdown-item" value="media/adventure.mp3" selected>New Adventure Theme</option>
 						<option class="dropdown-item" value="media/Peanuts Theme.mp3">Peanuts Theme</option>
 						<option class="dropdown-item" value="media/The Picard Song.mp3">The Picard Song</option>
@@ -29,6 +30,22 @@
 				</div>	
 			</div>
 			</label>
+
+			<div class="file">
+				<label class="file-label">
+				  <input id="file-input" class="file-input" type="file" name="resume" accept="audio/mpeg audio/*">
+				  <span class="file-cta">
+					<span class="file-icon">
+					  <i class="fas fa-upload"></i>
+					</span>
+					<span class="file-label">
+					  Choose a file…
+					</span>
+				  </span>
+				  <span>[currently isnt working]</span>
+				</label>
+			</div>
+			
 		</section>
 		
 		<section>
@@ -54,8 +71,9 @@
 			Volume: <input type="range" id="volume-slider" min="0" max="2" value="1" step="0.01">
 			<span id="volume-label">???</span>
 			<br>
-			<label for="chk-delay">Delay</label>
+			
 			<input type="checkbox" name="delay" id="chk-delay">
+			<label for="chk-delay">Delay</label>
 		</section>
 	</div>
 </main>
