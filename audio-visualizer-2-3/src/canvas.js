@@ -3,6 +3,7 @@ import * as utils from './utils.js';
 
 let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
 
+// have bowling alley carpet in bg
 
 function setupCanvas(canvasElement,analyserNodeRef){
 	// create drawing context
