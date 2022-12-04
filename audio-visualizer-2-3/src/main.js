@@ -52,6 +52,8 @@ function setupUI(canvasElement){
     let invertCheckbox = document.querySelector("#chk-invert");
     let embossCheckbox = document.querySelector("#chk-emboss");
     let scopeCheckbox = document.querySelector("#chk-scope");
+    // for file drag and drop
+    let fileDrop = document.querySelector("#drop");
 
 
     // visualizer toggles
@@ -152,6 +154,33 @@ function setupUI(canvasElement){
     }
     embossCheckbox.onchange = e => {
         drawParams.showEmboss = embossCheckbox.checked;
+    }
+    // file input
+    // https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/File_drag_and_drop
+    fileDrop.ondrop = e => {
+        console.log("file dropped");
+
+        e.preventDefault();
+
+        // SHOULD I BE SAVING THESE INTO LOCAL STORAGE OR GLOBAL VARS?
+        if (e.dataTransfer.items) {
+            [e.dataTransfer.items].forEach((item, i) => {
+                if (item.kind === "file") {
+                    console.log("in transfer");
+                    const file = item.getAsFile();
+                    console.log(file);
+                    // add file to dropdown
+
+                    // hook up song to visualizer
+
+                    // pause music
+                }
+            })
+        }
+    }
+    fileDrop.ondragover = e => {
+        console.log("hover");
+        e.preventDefault();
     }
 }
 
