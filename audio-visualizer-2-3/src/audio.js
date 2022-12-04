@@ -2,12 +2,16 @@
 let audioCtx;
 
 // 2 - WebAudio nodes that are part of our WebAudio audio routing graph
-let element, sourceNode, analyserNode, gainNode;
+let element, sourceNode, analyserNode, gainNode, distortion, delay, compression, pan;
 
 // 3 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
     gain: 0.5,
-    numSamples: 256
+    numSamples: 256,
+    curve: 0,
+    oversample: 'none',
+    delaySecs: 0.1
+
 });
 
 
@@ -31,8 +35,14 @@ function setupWebAudio(filePath) {
     analyserNode.fftSize = DEFAULTS.numSamples;
     gainNode = audioCtx.createGain();
     gainNode.gain.value = DEFAULTS.gain;
+    distortion = audioCtx.createWaveShaper();
+    distortion.curve = makeDistortionCurve(DEFAULTS.curve)
+    distortion.oversample = DEFAULTS.oversample;
+    delay = audioCtx.createDelay(DEFAULTS.delaySecs);
 
-    sourceNode.connect(analyserNode);
+    sourceNode.connect(distortion);
+    distortion.connect(delay);
+    delay.connect(analyserNode);
     analyserNode.connect(gainNode);
     gainNode.connect(audioCtx.destination);
 }
@@ -66,4 +76,41 @@ function getLocalStream() {
     });
 }
 
-export {audioCtx, setupWebAudio, playCurrentSound, pauseCurrentSound, loadSoundFile, setVolume, analyserNode};
+function makeDistortionCurve(amount) 
+{
+    const k = typeof amount === "number" ? amount : 50;
+
+    const sampleRate = 44100
+
+    const curve = new Float32Array(sampleRate);
+    const deg = Math.PI / 180;
+  
+    for (let i = 0; i < sampleRate; i++) {
+      const x = (i * 2) / sampleRate - 1;
+      curve[i] = ((3 + k) * x * 20 * deg) / (Math.PI + k * Math.abs(x));
+    }
+    return curve;
+}
+
+function updateDistortionCurve(value)
+{
+    distortion.curve = makeDistortionCurve(value)
+}
+
+function setOversample(value)
+{
+    distortion.oversample = value;
+}
+
+function setDelay(value)
+{
+    value = Number(value);
+    delay.delayTime.setValueAtTime(value,audioCtx.currentTime);
+}
+
+
+
+
+
+
+export {audioCtx, setupWebAudio, playCurrentSound, pauseCurrentSound, loadSoundFile, setVolume, setOversample, setDelay, updateDistortionCurve, analyserNode};

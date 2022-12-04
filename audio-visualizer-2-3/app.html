@@ -71,9 +71,27 @@
 			Volume: <input type="range" id="volume-slider" min="0" max="2" value="1" step="0.01">
 			<span id="volume-label">???</span>
 			<br>
-			
-			<input type="checkbox" name="delay" id="chk-delay">
+
 			<label for="chk-delay">Delay</label>
+			<input type="checkbox" name="delay" id="chk-delay">
+			<br>
+			<label for="delay-slider">Amount:</label>
+			<input type="range" id="delay-slider" min="0" max="1" value=".5" step="0.01">
+			<br>
+			<label for="chk-dist">Distortion</label>
+			<input type="checkbox" name="distortion" id="chk-dist">
+			<br>
+			<label for="dist-slider">Curve</label>
+			<input type="range" id="dist-slider" min="0" max="256" value="128" step="1">
+			<br>
+			<label for="dist-oversample">Oversampling</label>
+			<select id="dist-oversample" class="select is-primary is-small">
+				<option value="none">none</option>
+				<option value="2x">2x</option>
+				<option value="4x">4x</option>
+			</select>
+
+
 		</section>
 	</div>
 </main>

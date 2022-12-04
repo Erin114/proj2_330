@@ -33,12 +33,18 @@ function init(){
 
 // sets up buttons and labels
 function setupUI(canvasElement){
+    //Audio UI
     const fsButton = document.querySelector("#fsButton");
     const playButton = document.querySelector("#play-button");
     const fileInput = document.querySelector("#file-input");
     let volumeSlider = document.querySelector("#volume-slider");
     let volumeLabel = document.querySelector("#volume-label");
     let trackSelect = document.querySelector("#track-select");
+    let delaySlider = document.querySelector("#delay-slider");
+    let distSlider = document.querySelector("#dist-slider");
+    let oversampling = document.querySelector("#dist-oversample")
+
+    // Visual UI
     let gradientCheckbox = document.querySelector("#chk-gradient");
     let barsCheckbox = document.querySelector("#chk-bars");
     let circlesCheckbox = document.querySelector("#chk-circles");
@@ -46,6 +52,7 @@ function setupUI(canvasElement){
     let invertCheckbox = document.querySelector("#chk-invert");
     let embossCheckbox = document.querySelector("#chk-emboss");
     let scopeCheckbox = document.querySelector("#chk-scope");
+
 
     // visualizer toggles
     gradientCheckbox.checked = true;
@@ -85,6 +92,24 @@ function setupUI(canvasElement){
         // update label
         volumeLabel.innerHTML = Math.round((e.target.value/2 * 100));
     };
+
+    // update slider delay
+    delaySlider.oninput = e => {
+        audio.setDelay(e.target.value);
+    }
+
+
+    //update distortion curve
+    distSlider.oninput = e => {
+        audio.updateDistortionCurve(e.target.value);
+    }
+
+    //update oversampling
+    oversampling.oninput = e => {
+        audio.setOversample(e.target.value);
+    }
+
+
     // value of volume label to match initial slider value
     volumeSlider.dispatchEvent(new Event("input"));
     // track selector
