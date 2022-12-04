@@ -124,17 +124,23 @@ function setupUI(canvasElement){
         }
     }
     fileInput.onchange = e => {
-        console.log("here");
-        audio.loadSoundFile(e.target.files[0]);
-        // pause current track if playing
-        if (playButton.dataset.playing == "yes") {
-            playButton.dispatchEvent(new MouseEvent("click"));
+        
+        if (e.target.files)
+        {
+            audio.loadSoundFile(e.target.files[0]);
+            // pause current track if playing
+            if (playButton.dataset.playing == "yes") {
+                playButton.dispatchEvent(new MouseEvent("click"));
+            }
+            // add it to the dropdown
+            let newFileOption = document.createElement("option");
+            newFileOption.value = e.target.files[0].name;
+            newFileOption.innerHTML = e.target.files[0];
+            trackSelect.appendChild = newFileOption;
         }
-        // add it to the dropdown
-        let newFileOption = document.createElement("option");
-        newFileOption.value = e.target.files[0];
-        newFileOption.innerHTML = e.target.files[0];
-        trackSelect.appendChild = newFileOption;
+        
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then
+        // https://www.russellgood.com/process-uploaded-file-web-audio-api/
     }
     // toggle change events (for draw params)
     gradientCheckbox.onchange = e => {
@@ -155,33 +161,7 @@ function setupUI(canvasElement){
     embossCheckbox.onchange = e => {
         drawParams.showEmboss = embossCheckbox.checked;
     }
-    // file input
-    // https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/File_drag_and_drop
-    fileDrop.ondrop = e => {
-        console.log("file dropped");
-
-        e.preventDefault();
-
-        // SHOULD I BE SAVING THESE INTO LOCAL STORAGE OR GLOBAL VARS?
-        if (e.dataTransfer.items) {
-            [e.dataTransfer.items].forEach((item, i) => {
-                if (item.kind === "file") {
-                    console.log("in transfer");
-                    const file = item.getAsFile();
-                    console.log(file);
-                    // add file to dropdown
-
-                    // hook up song to visualizer
-
-                    // pause music
-                }
-            })
-        }
-    }
-    fileDrop.ondragover = e => {
-        console.log("hover");
-        e.preventDefault();
-    }
+    
 }
 
 // animation loop for visualizing audio
