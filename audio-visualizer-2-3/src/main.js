@@ -33,7 +33,7 @@ function init(){
 
 // sets up buttons and labels
 function setupUI(canvasElement){
-    //Audio UI
+    //Audio UI objects
     const fsButton = document.querySelector("#fsButton");
     const playButton = document.querySelector("#play-button");
     const fileInput = document.querySelector("#file-input");
@@ -48,7 +48,7 @@ function setupUI(canvasElement){
     let attack = document.querySelector("#attack-slider");
     let decay = document.querySelector("#decay-slider");
 
-    // Visual UI
+    // Visual UI objects
     let gradientCheckbox = document.querySelector("#chk-gradient");
     let barsCheckbox = document.querySelector("#chk-bars");
     let circlesCheckbox = document.querySelector("#chk-circles");
@@ -56,11 +56,8 @@ function setupUI(canvasElement){
     let invertCheckbox = document.querySelector("#chk-invert");
     let embossCheckbox = document.querySelector("#chk-emboss");
     let scopeCheckbox = document.querySelector("#chk-scope");
-    // for file drag and drop
-    let fileDrop = document.querySelector("#drop");
 
-
-    // visualizer toggles
+    // set visualizer toggles
     gradientCheckbox.checked = true;
     barsCheckbox.checked = true;
     circlesCheckbox.checked = true;
@@ -69,6 +66,9 @@ function setupUI(canvasElement){
     embossCheckbox.checked = false;
     scopeCheckbox.checked = true;
 
+    //
+    // UI EVENT FUNCTIONS
+    //
     // fullscreen
     fsButton.onclick = e => {
         console.log("init called");
@@ -91,52 +91,6 @@ function setupUI(canvasElement){
             e.target.dataset.playing = "no";
         }
     };
-    // volume
-    volumeSlider.oninput = e => {
-        // set gain
-        audio.setVolume(e.target.value);
-        // update label
-        volumeLabel.innerHTML = Math.round((e.target.value/2 * 100));
-    };
-
-    pan.oninput = e => {
-        audio.setPan(e.target.value);
-    }
-
-    // update slider delay
-    delaySlider.oninput = e => {
-        audio.setDelay(e.target.value);
-    }
-
-
-    //update distortion curve
-    distSlider.oninput = e => {
-        audio.updateDistortionCurve(e.target.value);
-    }
-
-    //update oversampling
-    oversampling.oninput = e => {
-        audio.setOversample(e.target.value);
-    }
-
-    //update compressor values
-    ratio.oninput = e => {
-        audio.setRatio(e.target.value);
-    }
-
-    attack.oninput = e => {
-        audio.setAttack(e.target.value);
-    }
-
-    decay.oninput = e => {
-        audio.setDecay(e.target.value);
-    }
-    
-    
-
-
-    // value of volume label to match initial slider value
-    volumeSlider.dispatchEvent(new Event("input"));
     // track selector
     trackSelect.onchange = e => {
         
@@ -146,25 +100,66 @@ function setupUI(canvasElement){
             playButton.dispatchEvent(new MouseEvent("click"));
         }
     }
-    fileInput.onchange = e => {
+    // NOTE 1204 - Moss: I couldn't get user file upload working 
+    // 1204: going to try again later using https://youtu.be/idhb45lc2xo?t=994
+    // fileInput.onchange = e => {
         
-        if (e.target.files)
-        {
-            audio.loadSoundFile(e.target.files[0]);
-            // pause current track if playing
-            if (playButton.dataset.playing == "yes") {
-                playButton.dispatchEvent(new MouseEvent("click"));
-            }
-            // add it to the dropdown
-            let newFileOption = document.createElement("option");
-            newFileOption.value = e.target.files[0].name;
-            newFileOption.innerHTML = e.target.files[0];
-            trackSelect.appendChild = newFileOption;
-        }
+    //     if (e.target.files[0] != undefined)
+    //     {
+    //         console.log(e.target.files[0].name);
+    //         audio.loadSoundFile(e.target.files[0]);
+    //         // pause current track if playing
+    //         if (playButton.dataset.playing == "yes") {
+    //             playButton.dispatchEvent(new MouseEvent("click"));
+    //         }
+    //         // add it to the dropdown
+    //         let newFileOption = document.createElement("option");
+    //         newFileOption.value = e.target.files[0].name;
+    //         newFileOption.innerHTML = e.target.files[0];
+    //         trackSelect.appendChild = newFileOption;
+    //     }
+    //     else {
+    //         console.log("file you tried to load is undefined")
+    //     }
         
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then
-        // https://www.russellgood.com/process-uploaded-file-web-audio-api/
+    //     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then
+    //     // https://www.russellgood.com/process-uploaded-file-web-audio-api/
+    // }
+
+    //
+    // AUDIO UI EVENT FUNCTIONS
+    //
+    // volume
+    volumeSlider.oninput = e => {
+        // set gain
+        audio.setVolume(e.target.value);
+        // update label
+        volumeLabel.innerHTML = Math.round((e.target.value/2 * 100));
+    };
+    pan.oninput = e => {
+        audio.setPan(e.target.value);
     }
+
+    // update slider delay
+    delaySlider.oninput = e => {
+        audio.setDelay(e.target.value);
+    }
+    //update distortion curve
+    distSlider.oninput = e => {
+        audio.updateDistortionCurve(e.target.value);
+    }
+    //update oversampling
+    oversampling.oninput = e => {
+        audio.setOversample(e.target.value);
+    }
+    // value of volume label to match initial slider value
+    volumeSlider.dispatchEvent(new Event("input"));
+    
+
+
+    //
+    // VISUALIZER EVENT FUNCTIONS
+    //
     // toggle change events (for draw params)
     gradientCheckbox.onchange = e => {
         drawParams.showGradient = gradientCheckbox.checked;
