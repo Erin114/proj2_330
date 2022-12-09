@@ -39,7 +39,7 @@ function setupWebAudio(filePath) {
     distortionNode.curve = makeDistortionCurve(DEFAULTS.curve)
     distortionNode.oversample = DEFAULTS.oversample;
     delayNode = audioCtx.createDelay(DEFAULTS.delaySecs);
-    panNode = audioctx.createSteroPanner();
+    panNode = audioCtx.createStereoPanner();
     compressionNode = audioCtx.createDynamicsCompressor();
     compressionNode.threshold.setValueAtTime(-50,audioCtx.currentTime);
     compressionNode.knee.setValueAtTime(50,audioCtx.currentTime);
@@ -102,19 +102,19 @@ function makeDistortionCurve(amount)
 
 function updateDistortionCurve(value)
 {
-    distortion.curve = makeDistortionCurve(value)
+    distortionNode.curve = makeDistortionCurve(value)
 }
 
 function setOversample(value)
 {
-    distortion.oversample = value;
+    distortionNode.oversample = value;
 }
 
 //delay
 function setDelay(value)
 {
     value = Number(value);
-    delay.delayTime.setValueAtTime(value,audioCtx.currentTime);
+    delayNode.delayTime.setValueAtTime(value,audioCtx.currentTime);
 }
 
 //pan
