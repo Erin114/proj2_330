@@ -68,16 +68,25 @@
 
 		<section>
 			<h2>Sound Effects</h2>
+			<!-- Gain -->
 			Volume: <input type="range" id="volume-slider" min="0" max="2" value="1" step="0.01">
 			<span id="volume-label">???</span>
 			<br>
 
+			<!-- Pan -->
+			Pan: <input type="range" id="pan-slider" min="-1" max="1" value="0" step="0.01">
+			<span id="pan-label">???</span>
+			<br>
+
+			<!-- Delay -->
 			<label for="chk-delay">Delay</label>
 			<input type="checkbox" name="delay" id="chk-delay">
 			<br>
 			<label for="delay-slider">Amount:</label>
 			<input type="range" id="delay-slider" min="0" max="1" value=".5" step="0.01">
 			<br>
+
+			<!-- Distortion -->
 			<label for="chk-dist">Distortion</label>
 			<input type="checkbox" name="distortion" id="chk-dist">
 			<br>
@@ -90,7 +99,7 @@
 				<option value="2x">2x</option>
 				<option value="4x">4x</option>
 			</select>
-
+			<!-- Compressor -->
 
 		</section>
 	</div>

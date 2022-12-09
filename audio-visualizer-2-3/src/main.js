@@ -42,7 +42,8 @@ function setupUI(canvasElement){
     let trackSelect = document.querySelector("#track-select");
     let delaySlider = document.querySelector("#delay-slider");
     let distSlider = document.querySelector("#dist-slider");
-    let oversampling = document.querySelector("#dist-oversample")
+    let oversampling = document.querySelector("#dist-oversample");
+    let pan = document.querySelector("#pan-slider");
 
     // Visual UI
     let gradientCheckbox = document.querySelector("#chk-gradient");
@@ -95,6 +96,10 @@ function setupUI(canvasElement){
         volumeLabel.innerHTML = Math.round((e.target.value/2 * 100));
     };
 
+    pan.oninput = e => {
+        audio.setPan(e.target.value);
+    }
+    
     // update slider delay
     delaySlider.oninput = e => {
         audio.setDelay(e.target.value);

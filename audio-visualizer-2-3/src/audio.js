@@ -2,7 +2,7 @@
 let audioCtx;
 
 // 2 - WebAudio nodes that are part of our WebAudio audio routing graph
-let element, sourceNode, analyserNode, gainNode, distortion, delay, compression, pan;
+let element, sourceNode, analyserNode, gainNode, distortionNode, delayNode, compression, panNode;
 
 // 3 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
@@ -35,15 +35,18 @@ function setupWebAudio(filePath) {
     analyserNode.fftSize = DEFAULTS.numSamples;
     gainNode = audioCtx.createGain();
     gainNode.gain.value = DEFAULTS.gain;
-    distortion = audioCtx.createWaveShaper();
-    distortion.curve = makeDistortionCurve(DEFAULTS.curve)
-    distortion.oversample = DEFAULTS.oversample;
-    delay = audioCtx.createDelay(DEFAULTS.delaySecs);
+    distortionNode = audioCtx.createWaveShaper();
+    distortionNode.curve = makeDistortionCurve(DEFAULTS.curve)
+    distortionNode.oversample = DEFAULTS.oversample;
+    delayNode = audioCtx.createDelay(DEFAULTS.delaySecs);
+    panNode = audioctx.createSteroPanner();
 
-    sourceNode.connect(distortion);
-    distortion.connect(delay);
-    delay.connect(analyserNode);
-    analyserNode.connect(gainNode);
+    //node connections
+    sourceNode.connect(distortionNode);
+    distortionNode.connect(delayNode);
+    delayNode.connect(analyserNode);
+    analyserNode.connect(panNode);
+    panNode.connect(gainNode);
     gainNode.connect(audioCtx.destination);
 }
 
@@ -59,6 +62,7 @@ function pauseCurrentSound() {
     element.pause();
 }
 
+//gain
 function setVolume(value) {
     value = Number(value);  // validate input
     gainNode.gain.value = value;
@@ -76,6 +80,7 @@ function getLocalStream() {
     });
 }
 
+//distortion
 function makeDistortionCurve(amount) 
 {
     const k = typeof amount === "number" ? amount : 50;
@@ -102,15 +107,21 @@ function setOversample(value)
     distortion.oversample = value;
 }
 
+//delay
 function setDelay(value)
 {
     value = Number(value);
     delay.delayTime.setValueAtTime(value,audioCtx.currentTime);
 }
 
+//pan
+function setPan (value)
+{
+    panNode.pan.setValueAtTime(value, audioCtx.currentTime);
+}
+
+//compression
 
 
-
-
-
-export {audioCtx, setupWebAudio, playCurrentSound, pauseCurrentSound, loadSoundFile, setVolume, setOversample, setDelay, updateDistortionCurve, analyserNode};
+export {audioCtx, setupWebAudio, playCurrentSound, pauseCurrentSound, loadSoundFile, 
+    setVolume, setOversample, setDelay, updateDistortionCurve, setPan, analyserNode};
