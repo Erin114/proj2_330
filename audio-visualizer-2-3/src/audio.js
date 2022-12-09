@@ -2,7 +2,7 @@
 let audioCtx;
 
 // 2 - WebAudio nodes that are part of our WebAudio audio routing graph
-let element, sourceNode, analyserNode, gainNode, distortionNode, delayNode, compression, panNode;
+let element, sourceNode, analyserNode, gainNode, distortionNode, delayNode, compressionNode, panNode;
 
 // 3 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
@@ -40,11 +40,12 @@ function setupWebAudio(filePath) {
     distortionNode.oversample = DEFAULTS.oversample;
     delayNode = audioCtx.createDelay(DEFAULTS.delaySecs);
     panNode = audioctx.createSteroPanner();
-
+    compressionNode = audioCtx.createDynamicsCompressor();
     //node connections
     sourceNode.connect(distortionNode);
     distortionNode.connect(delayNode);
-    delayNode.connect(analyserNode);
+    delayNode.connect(compressionNode);
+    compressionNode.connect(analyserNode);
     analyserNode.connect(panNode);
     panNode.connect(gainNode);
     gainNode.connect(audioCtx.destination);
@@ -121,6 +122,31 @@ function setPan (value)
 }
 
 //compression
+function setThreshold (value)
+{
+    compressionNode.threshold.setValueAtTime(value, audioCtx.currentTime);
+}
+function setKnee (value)
+{
+    compressionNode.knee.setValueAtTime(value, audioCtx.currentTime);
+}
+function setRatio (value)
+{
+    compressionNode.ratio.setValueAtTime(value, audioCtx.currentTime);
+}
+function setReduction (value)
+{
+    compressionNode.reduction.setValueAtTime(value, audioCtx.currentTime);
+}
+function setAttack (value)
+{
+    compressionNode.attack.setValueAtTime(value, audioCtx.currentTime);
+}
+function setDecay (value)
+{
+    compressionNode.release.setValueAtTime(value, audioCtx.currentTime);
+}
+
 
 
 export {audioCtx, setupWebAudio, playCurrentSound, pauseCurrentSound, loadSoundFile, 
