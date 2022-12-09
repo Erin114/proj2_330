@@ -44,6 +44,9 @@ function setupUI(canvasElement){
     let distSlider = document.querySelector("#dist-slider");
     let oversampling = document.querySelector("#dist-oversample");
     let pan = document.querySelector("#pan-slider");
+    let ratio = document.querySelector("#ratio-slider");
+    let attack = document.querySelector("#attack-slider");
+    let decay = document.querySelector("#decay-slider");
 
     // Visual UI
     let gradientCheckbox = document.querySelector("#chk-gradient");
@@ -99,7 +102,7 @@ function setupUI(canvasElement){
     pan.oninput = e => {
         audio.setPan(e.target.value);
     }
-    
+
     // update slider delay
     delaySlider.oninput = e => {
         audio.setDelay(e.target.value);
@@ -115,6 +118,21 @@ function setupUI(canvasElement){
     oversampling.oninput = e => {
         audio.setOversample(e.target.value);
     }
+
+    //update compressor values
+    ratio.oninput = e => {
+        audio.setRatio(e.target.value);
+    }
+
+    attack.oninput = e => {
+        audio.setAttack(e.target.value);
+    }
+
+    decay.oninput = e => {
+        audio.setDecay(e.target.value);
+    }
+    
+    
 
 
     // value of volume label to match initial slider value

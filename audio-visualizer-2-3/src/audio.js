@@ -41,6 +41,8 @@ function setupWebAudio(filePath) {
     delayNode = audioCtx.createDelay(DEFAULTS.delaySecs);
     panNode = audioctx.createSteroPanner();
     compressionNode = audioCtx.createDynamicsCompressor();
+    compressionNode.threshold.setValueAtTime(-50,audioCtx.currentTime);
+    compressionNode.knee.setValueAtTime(50,audioCtx.currentTime);
     //node connections
     sourceNode.connect(distortionNode);
     distortionNode.connect(delayNode);
@@ -122,21 +124,10 @@ function setPan (value)
 }
 
 //compression
-function setThreshold (value)
-{
-    compressionNode.threshold.setValueAtTime(value, audioCtx.currentTime);
-}
-function setKnee (value)
-{
-    compressionNode.knee.setValueAtTime(value, audioCtx.currentTime);
-}
+
 function setRatio (value)
 {
     compressionNode.ratio.setValueAtTime(value, audioCtx.currentTime);
-}
-function setReduction (value)
-{
-    compressionNode.reduction.setValueAtTime(value, audioCtx.currentTime);
 }
 function setAttack (value)
 {
@@ -150,4 +141,5 @@ function setDecay (value)
 
 
 export {audioCtx, setupWebAudio, playCurrentSound, pauseCurrentSound, loadSoundFile, 
-    setVolume, setOversample, setDelay, updateDistortionCurve, setPan, analyserNode};
+    setVolume, setOversample, setDelay, updateDistortionCurve, setPan, setRatio, 
+    setAttack, setDecay, analyserNode};
