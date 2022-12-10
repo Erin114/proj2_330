@@ -17,6 +17,28 @@ const DEFAULTS = Object.freeze({
 	sound1  :  "./media/adventure.mp3"
 });
 
+// taken from presets-demo
+const loadJsonFetch = (url,callback) => {
+    fetch(url)
+        .then(response => {
+            // If the response is successful, return the JSON
+            if (response.ok) {
+                return response.json();
+            }
+
+            // else throw an error that will be caught below
+            return response.text().then(text =>{
+                throw text;
+            });
+        }) // send the response.json() promise to the next .then()
+        .then(json => { // the second promise is resolved, and `json` is a JSON object
+            callback(json);
+        }).catch(error => {
+            // error
+            console.log(error);
+    });
+};
+
 function init(){
 	//console.log("init called");
 
@@ -27,6 +49,8 @@ function init(){
 	setupUI(canvasElement);
 
     canvas.setupCanvas(canvasElement, audio.analyserNode);
+
+    loadJsonFetch("./media/settings.json", json => setDefaultsFromFile(json));
 
     loop();
 }
@@ -187,6 +211,23 @@ function loop(){
     requestAnimationFrame(loop);
         
     canvas.draw(drawParams, audio.analyserNode);
+}
+
+function setDefaultsFromFile(json) {
+    //console.log("called");
+    audio.setVolume(json.volume);
+    audio.setOversample(json.oversample);
+    audio.setDelay(json.delay);
+    audio.setDecay(json.decay);
+    audio.setAttack(json.attack);
+    audio.setPan(json.pan);
+    
+    drawParams.showBars = json.bars;
+    drawParams.showCircles = json.circles;
+    drawParams.showNoise = json.noise;
+    drawParams.showInvert = json.invert;
+    drawParams.showGradient = json.gradient;
+    drawParams.showScope = json.osciliscope;
 }
 
 export {init};

@@ -1,0 +1,19 @@
+{
+    "volume": 0.5,
+    "curve": 0,
+    "pan": 0,
+    "delay": 0.1,
+    "distort": 128,
+    "ratio": 5,
+    "attack": 0.25,
+    "decay": 0.5,
+    "numSamples": 256,
+    "oversample": "none",
+    "gradient": true,
+    "bars": true,
+    "circles": true,
+    "noise": false,
+    "invert": false,
+    "emboss": false,
+    "osciliscope": true
+}

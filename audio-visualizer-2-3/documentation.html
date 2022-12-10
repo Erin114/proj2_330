@@ -16,69 +16,90 @@
     <av-nav></av-nav>
 
     <main class="px-1 py-1 content">
-        <div class="has-background-white mr-1 p-1"> 
+        <div class=" mr-1 p-1"> 
             <div class="is-large p-4">
-            <div class="title has-text-dark">Audio Visualizer Documentation</div>
+            <div class="title has-text-info">Audio Visualizer Documentation</div>
             
-            <div class="box mt-2">
-                <h2 class="subtitle has-text-weight-bold mb-0">Project Requirements</h2>
-                <a href="https://github.com/tonethar/IGME-330-Fall-2022/blob/main/projects/p2.md">Requirements</a>
+            <div class="box mt-2 has-background-dark">
+                <h2 class="subtitle has-text-weight-bold mb-0 has-text-white">Project Requirements</h2>
+                <a class="has-text-link" href="https://github.com/tonethar/IGME-330-Fall-2022/blob/main/projects/p2.md">Requirements</a>
             </div>
-            <div class="box mt-2">
-                <h2 class="subtitle has-text-weight-bold mb-0">Resources</h2>
-                <ol>
-                    <li><a href="https://developer.mozilla.org/en-US/">Mozilla Developer Docs (For Javascript)</a></li>
-                    <li><a href="https://www.w3schools.com/">W3 Schools Tutorials (For HTML)</a></li>
-                    <li><a href="https://bulma.io/documentation/">Bulma CSS Framework Documentation</a></li>
+            <div class="box mt-2 has-background-dark">
+                <h2 class="subtitle has-text-weight-bold mb-0 has-text-white">Resources</h2>
+                <ol class="has-text-white">
+                    <li><a class="has-text-link" href="https://developer.mozilla.org/en-US/">Mozilla Developer Docs </a>(For Javascript)</li>
+                    <li><a class="has-text-link" href="https://www.w3schools.com/">W3 Schools Tutorials </a>(For HTML)</li>
+                    <li><a class="has-text-link" href="https://bulma.io/documentation/">Bulma CSS Framework Documentation</a></li>
+                    <li><a href="https://stackoverflow.com/questions/25837158/how-to-draw-a-star-by-using-canvas-html5" class="has-text-link">Drawing Stars</a>[Not implemented yet]</li>
+                    <li><a href="https://www.russellgood.com/process-uploaded-file-web-audio-api/" class="has-text-link">Uploading File Tutorials</a>[Not Implemented Yet]</li>
                 </ol>
             </div>
-            <div class="box mt-2">
-                <h2 class="subtitle has-text-weight-bold mb-0">Web Audio API</h2>
-                <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API">Mozilla Docs</a>
+            <div class="box mt-2 has-background-dark">
+                <h2 class="subtitle has-text-weight-bold mb-0 has-text-white">Web Audio API</h2>
+                <a class="has-text-link" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API">Mozilla Docs</a>
             </div>
-            <div class="box mt-2">
-                <h2 class="subtitle has-text-weight-bold">Noteworthy</h2>
-                <ul>
+            <div class="box mt-2 has-background-dark">
+                <h2 class="subtitle has-text-weight-bold has-text-white">Noteworthy</h2>
+                <ul class="has-text-white">
                     <li>TODO</li>
                 </ul>
             </div>
-            <div class="box mt-2">
-                <h2 class="subtitle has-text-weight-bold">Grading</h2>
-                <ul>
+            <div class="box mt-2 has-background-dark">
+                <h2 class="subtitle has-text-weight-bold has-text-white">Grading</h2>
+                <ul class="has-text-white">
                     <li>V-A. Themes: Audio Visualizer</li>
                     <li>V-B. Functional Requirements: <ul>
                         <li>Seven new audio widgets/controls.</li>
                         <li>App data NOT YET LOADED FROM JSON</li>
                     </ul></li>
+                    <li>V-C. Impact: <ul>
+                        <li>Sandbox elements through manipulating audio using our controls</li>
+                        <li>App is meaningful to the user by visualizing songs, serving as a nice backdrop for events/parties.</li>
+                        <li>Functionality goes beyond the original audio visualizer assignment by exploring other audio features and adding new visuals.</li>
+                        <li>There is an Osciliscope utility function, as well as the utility functions in utils.js. More of the visual theme code is going to be broken up into utility functions for the second submission.</li>
+                        <li>There are more than 5 CSS style rules.</li>
+                    </ul></li>
+                    <li>V-I. Code: <ul>
+                        <li>Code is split into various modules in the src folder.</li>
+                        <li>App data NOT YET LOADED FROM JSON</li>
+                        <li>There are not yet three web components. There is only the global navigation component.</li>
+                    </ul></li>
+                    <li>V-II. Media: <ul>
+                        <li>Uses Bulma CSS</li>
+                        <li>Uses the Canvas API directly, no Pixi.js or WebGL</li>
+                        <li>All pages pass HTML validation.</li>
+                        <li>All pages pass CSS validation.</li>
+                        <li>No images used in project, so no images needed to be optimized.</li>
+                    </ul></li>
                 </ul>
             </div>
-            <div class="box mt-2">
-                <h2 class="subtitle has-text-weight-bold">To Do:</h2>
-                <ul id="todo">
+            <div class="box mt-2 has-background-dark">
+                <h2 class="subtitle has-text-weight-bold has-text-white">To Do:</h2>
+                <ul id="todo" class="has-text-white">
                     <li>Save and load app settings from local storage</li>
                     <li>Change checkboxes to buttons that change color based on whether or not they are selected</li>
-                    <hr>
-                    <li><s>Add toggleable delay node </s><a href="https://developer.mozilla.org/en-US/docs/Web/API/DelayNode">Docs</a> [DONE]</li>
-                    <li><s>Add toggleable compression node </s><a href="https://developer.mozilla.org/en-US/docs/Web/API/DynamicsCompressorNode">Docs</a> [DONE]</li>
-                    <li><s>Add toggleable wave-shaper node </s><a href="https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode">Docs</a> [DONE]</li>
-                    <li><s>Add stereo panning slider </s><a href="https://developer.mozilla.org/en-US/docs/Web/API/StereoPannerNode">Docs</a> [DONE]</li>
-                    <li>Add toggleable IIR filter node <a href="https://developer.mozilla.org/en-US/docs/Web/API/IIRFilterNode">Docs</a> [Redundant and annoying if Implemented, do biquad instead]</li>
-                    <hr>
+                    
+                    <li><s>Add toggleable delay node </s><a class="has-text-link" href="https://developer.mozilla.org/en-US/docs/Web/API/DelayNode">Docs</a> [DONE]</li>
+                    <li><s>Add toggleable compression node </s><a class="has-text-link" href="https://developer.mozilla.org/en-US/docs/Web/API/DynamicsCompressorNode">Docs</a> [DONE]</li>
+                    <li><s>Add toggleable wave-shaper node </s><a class="has-text-link" href="https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode">Docs</a> [DONE]</li>
+                    <li><s>Add stereo panning slider </s><a class="has-text-link" href="https://developer.mozilla.org/en-US/docs/Web/API/StereoPannerNode">Docs</a> [DONE]</li>
+                    <li>Add toggleable IIR filter node <a class="has-text-link" href="https://developer.mozilla.org/en-US/docs/Web/API/IIRFilterNode">Docs</a> [Redundant and annoying if Implemented, do biquad instead]</li>
+                    
                     <li>Create visualizer preset themes that can be chosen from a dropdown</li>
                     <li>Create shapes that move and pulse using frequency data</li>
                     <li>Draw track metadata? Toggleable show title</li>
                 </ul>
-                <h2>Stretch:</h2>
-                <ul id="stretch">
+                <h2 class="has-text-white">Stretch:</h2>
+                <ul id="stretch" class="has-text-white">
                     <li>Add user file upload, then add user file to dropdown select <a href="https://www.russellgood.com/process-uploaded-file-web-audio-api/">tutorial</a></li>
                     <li>Take input from mic</li>
-                    <li>Take input from iTunes API <a href="https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html">Docs</a></li>
-                    <li>Add toggleable convolver node <a href="https://developer.mozilla.org/en-US/docs/Web/API/ConvolverNode">Docs</a> [reverb is too complicated]</li>
-                    <li>Beat detection visualization <a href="http://joesul.li/van/beat-detection-using-web-audio/">(Explanation I found online)</a></li>
+                    <li>Take input from iTunes API <a class="has-text-link" href="https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html">Docs</a></li>
+                    <li>Add toggleable convolver node <a class="has-text-link" href="https://developer.mozilla.org/en-US/docs/Web/API/ConvolverNode">Docs</a> [reverb is too complicated]</li>
+                    <li>Beat detection visualization <a class="has-text-link" href="http://joesul.li/van/beat-detection-using-web-audio/">(Explanation found online)</a></li>
                 </ul>
             </div>
-            
+            </div>
         </div>
-        </main>
+    </main>
 </body>
 </html>

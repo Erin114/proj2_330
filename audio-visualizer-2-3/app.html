@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
+	<meta charset="utf-8">
 	<title>Audio Visualizer</title>
-	<link href="styles/default-styles.css" type="text/css" rel="stylesheet" />
+	
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+	<link href="styles/default-styles.css" type="text/css" rel="stylesheet">
     <script type="module" src="src/nav-template.js"></script>
 	<script src="./src/loader.js" type="module"></script>
 </head>
@@ -19,8 +19,8 @@
 			<button class="button" id="play-button" data-playing="no"></button>
 			<button class="button" id="fsButton">Full Screen</button>
 			
-			<label>Track: 
-				<div class="dropdown is-active" id="track-select">
+			<label>Track: </label>
+			<div class="dropdown is-active">
 				<div class="dropdown-menu">
 					<select class="dropdown-content" id="track-select">
 						<option class="dropdown-item" value="media/adventure.mp3" selected>New Adventure Theme</option>
@@ -29,7 +29,6 @@
 					</select>
 				</div>	
 			</div>
-			</label>
 
 			<!-- <div class="file">
 				<label class="file-label">
@@ -48,7 +47,7 @@
 		</section>
 		
 		<section>
-			<h2>Visual Effects</h2>
+			<h2 class="has-text-info">Visual Effects</h2>
 			<input class="checkbox" type="checkbox" name="show-gradient" id="chk-gradient">
 			<label for="chk-gradient">Show Gradient</label>
 			<input class="checkbox" type="checkbox" name="show-bars" id="chk-bars">
@@ -66,15 +65,15 @@
 		</section>
 
 		<section>
-			<h2>Sound Effects</h2>
+			<h2 class="has-text-info">Sound Effects</h2>
 			<!-- Gain -->
-			Volume: <input type="range" id="volume-slider" min="0" max="2" value="1" step="0.01">
-			<span id="volume-label">???</span>
+			<b>Volume: </b><input type="range" id="volume-slider" min="0" max="2" value="1" step="0.01">
+			<span id="volume-label">??</span>
 			<br>
 
 			<!-- Pan -->
-			Pan: <input type="range" id="pan-slider" min="-1" max="1" value="0" step="0.01">
-			<span id="pan-label">???</span>
+			<b>Pan: </b><span>Left</span> <input type="range" id="pan-slider" min="-1" max="1" value="0" step="0.01">
+			
 			<br>
 
 			<!-- Delay -->
@@ -94,7 +93,7 @@
 			<br>
 			<label for="dist-oversample">Oversampling</label>
 			<select id="dist-oversample" class="select is-primary is-small">
-				<option value="none">none</option>
+				<option selected value="none">none</option>
 				<option value="2x">2x</option>
 				<option value="4x">4x</option>
 			</select>

@@ -14,8 +14,10 @@ const DEFAULTS = Object.freeze({
 
 });
 
+let audioData = new Uint8Array(128);
 
-let audioData = new Uint8Array(DEFAULTS.numSamples/2);
+// load in defaults from file
+//let jsonDefaults = loadJsonFetch("./media/settings.json", )
 
 function setupWebAudio(filePath) {
 
@@ -68,7 +70,10 @@ function pauseCurrentSound() {
 //gain
 function setVolume(value) {
     value = Number(value);  // validate input
-    gainNode.gain.value = value;
+    if (gainNode != undefined)
+    {
+        gainNode.gain.value = value;
+    }
 }
 
 function getLocalStream() {
@@ -143,6 +148,10 @@ function getVolume()
 {
     return gainNode.gain.value;
 }
+
+// function setupWebAudio(filepath) {
+//     loadJsonFetch("./media/settings.json",json => setupWebAudioP(filepath, json));
+// }
 
 export {audioCtx, setupWebAudio, playCurrentSound, pauseCurrentSound, loadSoundFile, 
     setVolume, setOversample, setDelay, updateDistortionCurve, setPan, setRatio, 
