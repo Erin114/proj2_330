@@ -35,4 +35,4 @@ const goFullscreen = (element) => {
     
 };
   
-export {makeColor, getRandomColor, getLinearGradient, goFullscreen};
+export {makeColor, getRandomColor, getLinearGradient, goFullscreen, getRandom};

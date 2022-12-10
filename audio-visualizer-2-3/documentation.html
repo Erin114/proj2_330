@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    
+    <link rel="stylesheet" href="./styles/default-styles.css">
     <script type="module" src="src/nav-template.js"></script>
 
     <title>Documentation</title>
@@ -45,29 +45,36 @@
             <div class="box mt-2">
                 <h2 class="subtitle has-text-weight-bold">Grading</h2>
                 <ul>
-                    <li>TODO</li>
+                    <li>V-A. Themes: Audio Visualizer</li>
+                    <li>V-B. Functional Requirements: <ul>
+                        <li>Seven new audio widgets/controls.</li>
+                        <li>App data NOT YET LOADED FROM JSON</li>
+                    </ul></li>
                 </ul>
             </div>
             <div class="box mt-2">
                 <h2 class="subtitle has-text-weight-bold">To Do:</h2>
                 <ul id="todo">
-                    <li>Add user file upload, then add user file to dropdown select <a href="https://www.russellgood.com/process-uploaded-file-web-audio-api/">tutorial</a></li>
-                    <li>Take input from mic</li>
-                    <li>Take input from iTunes API <a href="https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html">Docs</a></li>
                     <li>Save and load app settings from local storage</li>
                     <li>Change checkboxes to buttons that change color based on whether or not they are selected</li>
                     <hr>
-                    <li>Add toggleable delay node <a href="https://developer.mozilla.org/en-US/docs/Web/API/DelayNode">Docs</a> [DONE]</li>
-                    <li>Add toggleable convolver node <a href="https://developer.mozilla.org/en-US/docs/Web/API/ConvolverNode">Docs</a> [reverb is too damn complicated]</li>
-                    <li>Add toggleable compression node <a href="https://developer.mozilla.org/en-US/docs/Web/API/DynamicsCompressorNode">Docs</a> [DONE]</li>
-                    <li>Add toggleable wave-shaper node <a href="https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode">Docs</a> [DONE]</li>
+                    <li><s>Add toggleable delay node </s><a href="https://developer.mozilla.org/en-US/docs/Web/API/DelayNode">Docs</a> [DONE]</li>
+                    <li><s>Add toggleable compression node </s><a href="https://developer.mozilla.org/en-US/docs/Web/API/DynamicsCompressorNode">Docs</a> [DONE]</li>
+                    <li><s>Add toggleable wave-shaper node </s><a href="https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode">Docs</a> [DONE]</li>
+                    <li><s>Add stereo panning slider </s><a href="https://developer.mozilla.org/en-US/docs/Web/API/StereoPannerNode">Docs</a> [DONE]</li>
                     <li>Add toggleable IIR filter node <a href="https://developer.mozilla.org/en-US/docs/Web/API/IIRFilterNode">Docs</a> [Redundant and annoying if Implemented, do biquad instead]</li>
-                    <li>Add stereo panning slider <a href="https://developer.mozilla.org/en-US/docs/Web/API/StereoPannerNode">Docs</a> [DONE]</li>
-                    <li>Beat detection visualization <a href="http://joesul.li/van/beat-detection-using-web-audio/">(Explanation I found online)</a></li>
                     <hr>
                     <li>Create visualizer preset themes that can be chosen from a dropdown</li>
                     <li>Create shapes that move and pulse using frequency data</li>
                     <li>Draw track metadata? Toggleable show title</li>
+                </ul>
+                <h2>Stretch:</h2>
+                <ul id="stretch">
+                    <li>Add user file upload, then add user file to dropdown select <a href="https://www.russellgood.com/process-uploaded-file-web-audio-api/">tutorial</a></li>
+                    <li>Take input from mic</li>
+                    <li>Take input from iTunes API <a href="https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html">Docs</a></li>
+                    <li>Add toggleable convolver node <a href="https://developer.mozilla.org/en-US/docs/Web/API/ConvolverNode">Docs</a> [reverb is too complicated]</li>
+                    <li>Beat detection visualization <a href="http://joesul.li/van/beat-detection-using-web-audio/">(Explanation I found online)</a></li>
                 </ul>
             </div>
             

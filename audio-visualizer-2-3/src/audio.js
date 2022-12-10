@@ -138,8 +138,12 @@ function setDecay (value)
     compressionNode.release.setValueAtTime(value, audioCtx.currentTime);
 }
 
-
+// data exports for visualization
+function getVolume() 
+{
+    return gainNode.gain.value;
+}
 
 export {audioCtx, setupWebAudio, playCurrentSound, pauseCurrentSound, loadSoundFile, 
     setVolume, setOversample, setDelay, updateDistortionCurve, setPan, setRatio, 
-    setAttack, setDecay, analyserNode};
+    setAttack, setDecay, getVolume, analyserNode};

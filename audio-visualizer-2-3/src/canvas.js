@@ -1,9 +1,10 @@
 
 import * as utils from './utils.js';
+import {getVolume} from './audio.js';
 
 let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
 
-// have bowling alley carpet in bg
+let circleColors, circles, circlesCreated;
 
 function setupCanvas(canvasElement,analyserNodeRef){
 	// create drawing context
@@ -16,6 +17,39 @@ function setupCanvas(canvasElement,analyserNodeRef){
 	analyserNode = analyserNodeRef;
 	// this is the array where the analyser data will be stored
 	audioData = new Uint8Array(analyserNode.fftSize/2);
+
+    circleColors = [utils.makeColor(247,37,133), utils.makeColor(114,9,183), utils.makeColor(58,12,163), utils.makeColor(67,97,238), utils.makeColor(76,201,240)];
+    circles = [];
+    circlesCreated = false;
+
+    for (let i = 0; i < 37; i++) {
+        // size (based on volume)
+        let _size = Math.trunc((getVolume() * 100) / 2);
+        // x and y location
+        let _x = Math.trunc(utils.getRandom(0,canvasWidth));
+        let _y = Math.trunc(utils.getRandom(0,canvasHeight));
+        let fillColor = circleColors[Math.trunc(Math.random() * circleColors.length)];
+        let strokeColor = circleColors[Math.trunc(Math.random() * circleColors.length)];
+        let _velocity = [utils.getRandom(-1,1), utils.getRandom(-1,1)];
+
+        //console.log(velocity);
+
+        let c = {
+            x: _x,
+            y: _y,
+            size: _size,
+            fill: fillColor,
+            stroke: strokeColor,
+            velocity: _velocity
+        }
+
+        circles.push(c);
+        //console.log(c);
+        if (i == 36)
+        {
+            circlesCreated = true;
+        }
+    }
 }
 
 function draw(params={}){
@@ -23,10 +57,13 @@ function draw(params={}){
 	
 	ctx.save()
     ctx.fillStyle = "black";
-    ctx.globalAlpha = 0.1;
+    //ctx.globalAlpha = 0.1;
     ctx.fillRect(0,0,canvasWidth,canvasHeight);
     ctx.restore();
 	
+    
+
+
     //
     // TOGGLES
     // 
@@ -64,21 +101,21 @@ function draw(params={}){
             
             let circleRadius = percent * maxRadius;
             ctx.beginPath();
-            ctx.fillStyle = utils.makeColor(255, 0, 0, 0.34 - percent/3.0);
+            ctx.fillStyle = circleColors[0];
             ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius*1.5, 0, 2*Math.PI, false);
             ctx.fill();
             ctx.closePath();
             ctx.restore();
 
             ctx.beginPath();
-            ctx.fillStyle = utils.makeColor(0, 0, 255, 0.10 - percent/10.0);
-            ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius*0.5, 0, 2*Math.PI, false);
+            ctx.fillStyle = circleColors[1];
+            ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius*1.0, 0, 2*Math.PI, false);
             ctx.fill();
             ctx.closePath();
 
             ctx.save();
             ctx.beginPath();
-            ctx.fillStyle = utils.makeColor(128, 128,0, 0.5 - percent/5.0);
+            ctx.fillStyle = circleColors[2];
             ctx.arc(canvasWidth/2, canvasHeight/2, circleRadius*0.5, 0, 2*Math.PI, false);
             ctx.fill();
             ctx.closePath();
@@ -94,6 +131,44 @@ function draw(params={}){
         osciliscope();
     }
 
+    // BOWLING CARPET THEME
+    //
+    // for stars: https://stackoverflow.com/questions/25837158/how-to-draw-a-star-by-using-canvas-html5
+    if (circlesCreated) {
+        for (let i = 0; i < 37; i++) {
+            drawArc(
+                ctx, 
+                circles[i].x, 
+                circles[i].y, 
+                Math.trunc((getVolume() * 100) / 4),
+                0,
+                Math.PI*2,
+                circles[i].fill,
+                3,
+                circles[i].stroke);
+            // move circles
+            circles[i].x += circles[i].velocity[0];
+            circles[i].y += circles[i].velocity[1];
+            // circle bounding collision check
+            let leftside = circles[i].x - Math.trunc((getVolume() * 100) / 4);
+            let rightside = circles[i].x + Math.trunc((getVolume() * 100) / 4);
+            let topside = circles[i].y - Math.trunc((getVolume() * 100) / 4);
+            let downside = circles[i].y + Math.trunc((getVolume() * 100) / 4);
+            
+            if (leftside <= 0) {
+                circles[i].velocity[0] = Math.abs(circles[i].velocity[0]);
+            } else if (rightside >= canvasWidth) {
+                circles[i].velocity[0] = -1 * Math.abs(circles[i].velocity[0]);
+            }
+            if (topside <= 0) {
+                circles[i].velocity[1] = Math.abs(circles[i].velocity[1]);
+            } else if (downside >= canvasHeight) {
+                circles[i].velocity[1] = -1 * Math.abs(circles[i].velocity[1]);
+            }
+        }
+    }
+
+    
     //
     // IMAGE DATA MANIP
     //
@@ -147,9 +222,9 @@ function canvasClicked(e){
     let mouseY = e.clientY - rect.y;
     console.log(mouseX,mouseY);
     for (let i = 0; i < 10; i++) {
-        let x = getRandomInt(-50,50) + mouseX;
-        let y = getRandomInt(-50,50) + mouseY;
-        let radius = getRandomInt(5,45);
+        let x = utils.getRandom(-50,50) + mouseX;
+        let y = utils.getRandom(-50,50) + mouseY;
+        let radius = utils.getRandom(5,45);
         let color = getRandomColor();
         drawArc(ctx,x,y,radius,0,(Math.PI * 2),color);
     }
@@ -223,5 +298,7 @@ function osciliscope() {
     ctx.lineTo(canvasWidth, canvasHeight / 2);
     ctx.stroke();
 }
+
+
 
 export {setupCanvas,draw};
