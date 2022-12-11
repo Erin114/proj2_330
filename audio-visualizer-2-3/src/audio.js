@@ -2,7 +2,10 @@
 let audioCtx;
 
 // 2 - WebAudio nodes that are part of our WebAudio audio routing graph
-let element, sourceNode, analyserNode, gainNode, distortionNode, delayNode, compressionNode, panNode;
+let element, sourceNode, analyserNode, gainNode, 
+distortionNode, delayNode, compressionNode, panNode;
+
+let nodeChain;
 
 // 3 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
@@ -54,6 +57,9 @@ function setupWebAudio(filePath) {
     panNode.connect(gainNode);
     gainNode.connect(audioCtx.destination);
 }
+
+function addNodeChain()
+{}
 
 function loadSoundFile(filePath) {
     element.src = filePath;
