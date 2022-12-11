@@ -1,6 +1,6 @@
 
 import * as utils from './utils.js';
-import {getVolume,getPan,analyserNode} from './audio.js';
+import {getVolume,getPan} from './audio.js';
 
 let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
 
@@ -56,7 +56,7 @@ function setupCanvas(canvasElement,analyserNodeRef){
         }
     }
     // create stars for bowling alley carpet theme
-    let aData = analyserNode.getByteFrequencyData();
+    let aData = analyserNode.getByteFrequencyData(audioData);
     for (let i = 0; i < 31; i++) {
         //function drawStar(cx,cy,spikes,outerRadius,innerRadius)
         // x and y location
@@ -129,7 +129,7 @@ function draw(params={}){
     }
     if (starsCreated) {
         for (let i = 0; i < 31; i++) {
-            
+
         }
     }
 
