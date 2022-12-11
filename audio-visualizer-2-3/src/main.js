@@ -205,7 +205,7 @@ function setupUI(canvasElement){
             document.querySelector("#dist-slider").classList.add("is-hidden");
             document.querySelector("#dist-over").classList.add("is-hidden");
             document.querySelector("#dist-oversample").classList.add("is-hidden");
-            audio.addNodeToChain(0);
+            audio.removeNodeFromChain(0);
         }
     }
     chkComp.onchange = e => {
@@ -224,7 +224,7 @@ function setupUI(canvasElement){
             document.querySelector("#attack-slider").classList.add("is-hidden");
             document.querySelector("#decay-label").classList.add("is-hidden");
             document.querySelector("#decay-slider").classList.add("is-hidden");
-            audio.addNodeToChain(2);
+            audio.removeNodeFromChain(2);
         }
     }
 
