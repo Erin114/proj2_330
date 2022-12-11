@@ -1,10 +1,11 @@
 
 import * as utils from './utils.js';
-import {getVolume} from './audio.js';
+import {getVolume,getPan,analyserNode} from './audio.js';
 
 let ctx,canvasWidth,canvasHeight,gradient,analyserNode,audioData;
 
 let circleColors, circles, circlesCreated;
+let starColors, stars, starsCreated;
 
 function setupCanvas(canvasElement,analyserNodeRef){
 	// create drawing context
@@ -21,6 +22,9 @@ function setupCanvas(canvasElement,analyserNodeRef){
     circleColors = [utils.makeColor(247,37,133), utils.makeColor(114,9,183), utils.makeColor(58,12,163), utils.makeColor(67,97,238), utils.makeColor(76,201,240)];
     circles = [];
     circlesCreated = false;
+    starColors = [utils.makeColor(255,190,11), utils.makeColor(251,86,7), utils.makeColor(255,0,110), utils.makeColor(131,56,236), utils.makeColor(58,134,255)];
+    stars = [];
+    starsCreated = false;
 
     // create circles for bowling alley carpet theme
     for (let i = 0; i < 37; i++) {
@@ -51,6 +55,31 @@ function setupCanvas(canvasElement,analyserNodeRef){
             circlesCreated = true;
         }
     }
+    // create stars for bowling alley carpet theme
+    let aData = analyserNode.getByteFrequencyData();
+    for (let i = 0; i < 31; i++) {
+        //function drawStar(cx,cy,spikes,outerRadius,innerRadius)
+        // x and y location
+        let _x = Math.trunc(utils.getRandom(0,canvasWidth));
+        let _y = Math.trunc(utils.getRandom(0,canvasHeight));
+        let _inner = aData[i];
+        let _outer = aData[i+3];
+        let _spikes = 5;
+
+        let s = {
+            x: _x,
+            y: _y,
+            inner: _inner,
+            outer: _outer,
+            spikes: _spikes
+        }
+
+        stars.push(s);
+        if (i == 30) {
+            starsCreated = true;
+        }
+    }
+
 }
 
 function draw(params={}){
@@ -78,7 +107,7 @@ function draw(params={}){
                 3,
                 circles[i].stroke);
             // move circles
-            circles[i].x += circles[i].velocity[0];
+            circles[i].x += circles[i].velocity[0] + getPan();
             circles[i].y += circles[i].velocity[1];
             // circle bounding collision check
             let leftside = circles[i].x - Math.trunc((getVolume() * 100) / 4);
@@ -98,7 +127,11 @@ function draw(params={}){
             }
         }
     }
-
+    if (starsCreated) {
+        for (let i = 0; i < 31; i++) {
+            
+        }
+    }
 
     //
     // TOGGLES
@@ -329,7 +362,7 @@ function drawStar(cx,cy,spikes,outerRadius,innerRadius){
     ctx.stroke();
     ctx.fillStyle='skyblue';
     ctx.fill();
-    
+
     ctx.restore();
   }
 

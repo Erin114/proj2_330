@@ -198,11 +198,10 @@ function getVolume()
 {
     return gainNode.gain.value;
 }
-
-// function setupWebAudio(filepath) {
-//     loadJsonFetch("./media/settings.json",json => setupWebAudioP(filepath, json));
-// }
+function getPan() {
+    return panNode.pan.value;
+}
 
 export {audioCtx, setupWebAudio, playCurrentSound, pauseCurrentSound, loadSoundFile, 
     setVolume, setOversample, setDelay, updateDistortionCurve, setPan, setRatio, 
-    setAttack, setDecay, getVolume, removeNodeFromChain, addNodeToChain, analyserNode};
+    setAttack, setDecay, getVolume, removeNodeFromChain, addNodeToChain, getPan, analyserNode};
