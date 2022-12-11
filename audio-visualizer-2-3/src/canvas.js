@@ -59,18 +59,22 @@ function setupCanvas(canvasElement,analyserNodeRef){
     for (let i = 0; i < 31; i++) {
         //function drawStar(cx,cy,spikes,outerRadius,innerRadius)
         // x and y location
-        let _x = Math.trunc(utils.getRandom(0,canvasWidth));
-        let _y = Math.trunc(utils.getRandom(0,canvasHeight));
-        let _inner = audioData[i];
-        let _outer = audioData[i+3];
+        let _x = Math.trunc(utils.getRandom(20,canvasWidth - 20));
+        let _y = Math.trunc(utils.getRandom(20,canvasHeight - 20));
+        let _inner = 5;
+        let _outer = 10;
         let _spikes = 5;
+        let _fill = starColors[Math.trunc(Math.random() * starColors.length)];
+        let _stroke = starColors[Math.trunc(Math.random() * starColors.length)];
 
         let s = {
             x: _x,
             y: _y,
             inner: _inner,
             outer: _outer,
-            spikes: _spikes
+            spikes: _spikes,
+            fill: _fill,
+            stroke: _stroke
         }
 
         stars.push(s);
@@ -127,11 +131,7 @@ function draw(params={}){
             }
         }
     }
-    if (starsCreated) {
-        for (let i = 0; i < 31; i++) {
-
-        }
-    }
+    
 
     //
     // TOGGLES
@@ -201,7 +201,49 @@ function draw(params={}){
     }
 
     
+    if (starsCreated) {
+        ctx.save();
+        ctx.globalCompositeOperation = "screen";
+        ctx.globalAlpha = 0.7;
+        
+        for (let i = 0; i < 31; i++) {
+            //function drawStar(cx,cy,spikes,outerRadius,innerRadius)
+            
+            // rotate based on volume
+            //ctx.translate(stars[i].x, stars[i].y);
+            ctx.rotate(getVolume() % 2);
+            drawStar(
+                stars[i].x,
+                stars[i].y,
+                stars[i].spikes,
+                stars[i].outer,
+                stars[i].inner,
+                stars[i].fill,
+                stars[i].stroke
+            )
+            //ctx.translate(-stars[i].x, -stars[i].y);
 
+            // translate based on pan
+            stars[i].x += getPan() * 2;
+            stars[i].y += 2;
+
+            let leftside = stars[i].x - 10;
+            let rightside = stars[i].x + 10;
+            let topside = stars[i].y - 10;
+            let downside = stars[i].y + 10;
+            if (leftside <= 0) {
+                stars[i].x = canvasWidth - 10;
+            } else if (rightside >= canvasWidth) {
+                stars[i].x = 10;
+            }
+            if (topside <= 0) {
+                stars[i].y = canvasHeight - 10;
+            } else if (downside >= canvasHeight) {
+                stars[i].y = 10;
+            }
+        }
+        ctx.restore();
+    }
     
     //
     // IMAGE DATA MANIP
@@ -335,7 +377,7 @@ function osciliscope() {
     ctx.stroke();
     ctx.restore();
 }
-function drawStar(cx,cy,spikes,outerRadius,innerRadius){
+function drawStar(cx,cy,spikes,outerRadius,innerRadius, fill, stroke){
     ctx.save();
     var rot=Math.PI/2*3;
     var x=cx;
@@ -344,7 +386,7 @@ function drawStar(cx,cy,spikes,outerRadius,innerRadius){
 
     ctx.beginPath();
     ctx.moveTo(cx,cy-outerRadius)
-    for(i=0;i<spikes;i++){
+    for(let i=0;i<spikes;i++){
       x=cx+Math.cos(rot)*outerRadius;
       y=cy+Math.sin(rot)*outerRadius;
       ctx.lineTo(x,y)
@@ -358,9 +400,9 @@ function drawStar(cx,cy,spikes,outerRadius,innerRadius){
     ctx.lineTo(cx,cy-outerRadius);
     ctx.closePath();
     ctx.lineWidth=5;
-    ctx.strokeStyle='blue';
-    ctx.stroke();
-    ctx.fillStyle='skyblue';
+    ctx.strokeStyle = stroke;
+    //ctx.stroke();
+    ctx.fillStyle = fill;
     ctx.fill();
 
     ctx.restore();
