@@ -71,6 +71,9 @@ function setupUI(canvasElement){
     let ratio = document.querySelector("#ratio-slider");
     let attack = document.querySelector("#attack-slider");
     let decay = document.querySelector("#decay-slider");
+    let chkDistortion = document.querySelector("#chk-dist");
+    let chkDelay = document.querySelector("#chk-delay");
+    let chkComp = document.querySelector("#chk-comp");
 
     // Visual UI objects
     let gradientCheckbox = document.querySelector("#chk-gradient");
@@ -178,8 +181,46 @@ function setupUI(canvasElement){
     }
     // value of volume label to match initial slider value
     volumeSlider.dispatchEvent(new Event("input"));
-    
-
+    // show/hide delay functions
+    chkDelay.onchange = e => {
+        if (e.target.checked) {
+            document.querySelector("#delay-label").classList.remove("is-hidden");
+            document.querySelector("#delay-slider").classList.remove("is-hidden");
+        } else {
+            document.querySelector("#delay-label").classList.add("is-hidden");
+            document.querySelector("#delay-slider").classList.add("is-hidden");
+        }
+    }
+    chkDistortion.onchange = e => {
+        if (e.target.checked) {
+            document.querySelector("#dist-curve").classList.remove("is-hidden");
+            document.querySelector("#dist-slider").classList.remove("is-hidden");
+            document.querySelector("#dist-over").classList.remove("is-hidden");
+            document.querySelector("#dist-oversample").classList.remove("is-hidden");
+        } else {
+            document.querySelector("#dist-curve").classList.add("is-hidden");
+            document.querySelector("#dist-slider").classList.add("is-hidden");
+            document.querySelector("#dist-over").classList.add("is-hidden");
+            document.querySelector("#dist-oversample").classList.add("is-hidden");
+        }
+    }
+    chkComp.onchange = e => {
+        if (e.target.checked) {
+            document.querySelector("#ratio-label").classList.remove("is-hidden");
+            document.querySelector("#ratio-slider").classList.remove("is-hidden");
+            document.querySelector("#attack-label").classList.remove("is-hidden");
+            document.querySelector("#attack-slider").classList.remove("is-hidden");
+            document.querySelector("#decay-label").classList.remove("is-hidden");
+            document.querySelector("#decay-slider").classList.remove("is-hidden");
+        } else {
+            document.querySelector("#ratio-label").classList.add("is-hidden");
+            document.querySelector("#ratio-slider").classList.add("is-hidden");
+            document.querySelector("#attack-label").classList.add("is-hidden");
+            document.querySelector("#attack-slider").classList.add("is-hidden");
+            document.querySelector("#decay-label").classList.add("is-hidden");
+            document.querySelector("#decay-slider").classList.add("is-hidden");
+        }
+    }
 
     //
     // VISUALIZER EVENT FUNCTIONS
