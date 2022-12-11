@@ -186,9 +186,11 @@ function setupUI(canvasElement){
         if (e.target.checked) {
             document.querySelector("#delay-label").classList.remove("is-hidden");
             document.querySelector("#delay-slider").classList.remove("is-hidden");
+            audio.addNodeToChain(1);
         } else {
             document.querySelector("#delay-label").classList.add("is-hidden");
             document.querySelector("#delay-slider").classList.add("is-hidden");
+            audio.removeNodeFromChain(1);
         }
     }
     chkDistortion.onchange = e => {
@@ -197,11 +199,13 @@ function setupUI(canvasElement){
             document.querySelector("#dist-slider").classList.remove("is-hidden");
             document.querySelector("#dist-over").classList.remove("is-hidden");
             document.querySelector("#dist-oversample").classList.remove("is-hidden");
+            audio.addNodeToChain(0);
         } else {
             document.querySelector("#dist-curve").classList.add("is-hidden");
             document.querySelector("#dist-slider").classList.add("is-hidden");
             document.querySelector("#dist-over").classList.add("is-hidden");
             document.querySelector("#dist-oversample").classList.add("is-hidden");
+            audio.addNodeToChain(0);
         }
     }
     chkComp.onchange = e => {
@@ -212,6 +216,7 @@ function setupUI(canvasElement){
             document.querySelector("#attack-slider").classList.remove("is-hidden");
             document.querySelector("#decay-label").classList.remove("is-hidden");
             document.querySelector("#decay-slider").classList.remove("is-hidden");
+            audio.addNodeToChain(2);
         } else {
             document.querySelector("#ratio-label").classList.add("is-hidden");
             document.querySelector("#ratio-slider").classList.add("is-hidden");
@@ -219,6 +224,7 @@ function setupUI(canvasElement){
             document.querySelector("#attack-slider").classList.add("is-hidden");
             document.querySelector("#decay-label").classList.add("is-hidden");
             document.querySelector("#decay-slider").classList.add("is-hidden");
+            audio.addNodeToChain(2);
         }
     }
 
