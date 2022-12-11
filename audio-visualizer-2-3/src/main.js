@@ -71,9 +71,9 @@ function setupUI(canvasElement){
     let ratio = document.querySelector("#ratio-slider");
     let attack = document.querySelector("#attack-slider");
     let decay = document.querySelector("#decay-slider");
-    let compCheckbox = document.querySelector("#chk-comp");
-    let delayCheckbox = document.querySelector("#chk-delay");
-    let distCheckbox = document.querySelector("#chk-dist");
+    let chkDistortion = document.querySelector("#chk-dist");
+    let chkDelay = document.querySelector("#chk-delay");
+    let chkComp = document.querySelector("#chk-comp");
 
     // Visual UI objects
     let gradientCheckbox = document.querySelector("#chk-gradient");
@@ -181,46 +181,46 @@ function setupUI(canvasElement){
     }
     // value of volume label to match initial slider value
     volumeSlider.dispatchEvent(new Event("input"));
-
-    
-    distCheckbox.onchange = e =>{
-        if (distCheckbox.checked == true)
-        {
-            audio.addNodeToChain(0);
-            console.log("add");
-        }
-        else
-        {
-            audio.removeNodeFromChain(0);
-            console.log("rem");
+    // show/hide delay functions
+    chkDelay.onchange = e => {
+        if (e.target.checked) {
+            document.querySelector("#delay-label").classList.remove("is-hidden");
+            document.querySelector("#delay-slider").classList.remove("is-hidden");
+        } else {
+            document.querySelector("#delay-label").classList.add("is-hidden");
+            document.querySelector("#delay-slider").classList.add("is-hidden");
         }
     }
-    compCheckbox.onchange = e =>{
-        if (compCheckbox.checked == true)
-        {
-            audio.addNodeToChain(2);
-            console.log("add");
-        }
-        else
-        {
-            audio.removeNodeFromChain(2);
-            console.log("rem");
-        }
-    }
-    delayCheckbox.onchange = e =>{
-        if (delayCheckbox.checked == true)
-        {
-            audio.addNodeToChain(1);
-            console.log("add");
-        }
-        else
-        {
-            audio.removeNodeFromChain(1);
-            console.log("rem");
+    chkDistortion.onchange = e => {
+        if (e.target.checked) {
+            document.querySelector("#dist-curve").classList.remove("is-hidden");
+            document.querySelector("#dist-slider").classList.remove("is-hidden");
+            document.querySelector("#dist-over").classList.remove("is-hidden");
+            document.querySelector("#dist-oversample").classList.remove("is-hidden");
+        } else {
+            document.querySelector("#dist-curve").classList.add("is-hidden");
+            document.querySelector("#dist-slider").classList.add("is-hidden");
+            document.querySelector("#dist-over").classList.add("is-hidden");
+            document.querySelector("#dist-oversample").classList.add("is-hidden");
         }
     }
-    
-
+    chkComp.onchange = e => {
+        if (e.target.checked) {
+            document.querySelector("#ratio-label").classList.remove("is-hidden");
+            document.querySelector("#ratio-slider").classList.remove("is-hidden");
+            document.querySelector("#attack-label").classList.remove("is-hidden");
+            document.querySelector("#attack-slider").classList.remove("is-hidden");
+            document.querySelector("#decay-label").classList.remove("is-hidden");
+            document.querySelector("#decay-slider").classList.remove("is-hidden");
+        } else {
+            document.querySelector("#ratio-label").classList.add("is-hidden");
+            document.querySelector("#ratio-slider").classList.add("is-hidden");
+            document.querySelector("#attack-label").classList.add("is-hidden");
+            document.querySelector("#attack-slider").classList.add("is-hidden");
+            document.querySelector("#decay-label").classList.add("is-hidden");
+            document.querySelector("#decay-slider").classList.add("is-hidden");
+        }
+    }
 
     //
     // VISUALIZER EVENT FUNCTIONS

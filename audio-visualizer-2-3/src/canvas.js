@@ -22,6 +22,7 @@ function setupCanvas(canvasElement,analyserNodeRef){
     circles = [];
     circlesCreated = false;
 
+    // create circles for bowling alley carpet theme
     for (let i = 0; i < 37; i++) {
         // size (based on volume)
         let _size = Math.trunc((getVolume() * 100) / 2);
@@ -61,7 +62,42 @@ function draw(params={}){
     ctx.fillRect(0,0,canvasWidth,canvasHeight);
     ctx.restore();
 	
-    
+    // BOWLING CARPET THEME
+    //
+    // for stars: https://stackoverflow.com/questions/25837158/how-to-draw-a-star-by-using-canvas-html5
+    if (circlesCreated) {
+        for (let i = 0; i < 37; i++) {
+            drawArc(
+                ctx, 
+                circles[i].x, 
+                circles[i].y, 
+                Math.trunc((getVolume() * 100) / 4),
+                0,
+                Math.PI*2,
+                circles[i].fill,
+                3,
+                circles[i].stroke);
+            // move circles
+            circles[i].x += circles[i].velocity[0];
+            circles[i].y += circles[i].velocity[1];
+            // circle bounding collision check
+            let leftside = circles[i].x - Math.trunc((getVolume() * 100) / 4);
+            let rightside = circles[i].x + Math.trunc((getVolume() * 100) / 4);
+            let topside = circles[i].y - Math.trunc((getVolume() * 100) / 4);
+            let downside = circles[i].y + Math.trunc((getVolume() * 100) / 4);
+            
+            if (leftside <= 0) {
+                circles[i].velocity[0] = Math.abs(circles[i].velocity[0]);
+            } else if (rightside >= canvasWidth) {
+                circles[i].velocity[0] = -1 * Math.abs(circles[i].velocity[0]);
+            }
+            if (topside <= 0) {
+                circles[i].velocity[1] = Math.abs(circles[i].velocity[1]);
+            } else if (downside >= canvasHeight) {
+                circles[i].velocity[1] = -1 * Math.abs(circles[i].velocity[1]);
+            }
+        }
+    }
 
 
     //
@@ -83,8 +119,8 @@ function draw(params={}){
         let topSpacing = 100;
 
         ctx.save();
-        ctx.fillStyle = 'rgba(255,255,255,0.50)';
-        ctx.strokeStyle = 'rgba(0,0,0,0.50)';
+        ctx.fillStyle = utils.makeColor(247,37,133);
+        ctx.strokeStyle = utils.makeColor(247,37,133);
         // loop through audio data and draw bars
         for (let i = 0; i < audioData.length; i++) {
             ctx.fillRect(margin + i * (barWidth + barSpacing), topSpacing + 256 - audioData[i], barWidth, barHeight);
@@ -131,42 +167,7 @@ function draw(params={}){
         osciliscope();
     }
 
-    // BOWLING CARPET THEME
-    //
-    // for stars: https://stackoverflow.com/questions/25837158/how-to-draw-a-star-by-using-canvas-html5
-    if (circlesCreated) {
-        for (let i = 0; i < 37; i++) {
-            drawArc(
-                ctx, 
-                circles[i].x, 
-                circles[i].y, 
-                Math.trunc((getVolume() * 100) / 4),
-                0,
-                Math.PI*2,
-                circles[i].fill,
-                3,
-                circles[i].stroke);
-            // move circles
-            circles[i].x += circles[i].velocity[0];
-            circles[i].y += circles[i].velocity[1];
-            // circle bounding collision check
-            let leftside = circles[i].x - Math.trunc((getVolume() * 100) / 4);
-            let rightside = circles[i].x + Math.trunc((getVolume() * 100) / 4);
-            let topside = circles[i].y - Math.trunc((getVolume() * 100) / 4);
-            let downside = circles[i].y + Math.trunc((getVolume() * 100) / 4);
-            
-            if (leftside <= 0) {
-                circles[i].velocity[0] = Math.abs(circles[i].velocity[0]);
-            } else if (rightside >= canvasWidth) {
-                circles[i].velocity[0] = -1 * Math.abs(circles[i].velocity[0]);
-            }
-            if (topside <= 0) {
-                circles[i].velocity[1] = Math.abs(circles[i].velocity[1]);
-            } else if (downside >= canvasHeight) {
-                circles[i].velocity[1] = -1 * Math.abs(circles[i].velocity[1]);
-            }
-        }
-    }
+    
 
     
     //
@@ -278,10 +279,12 @@ function drawLine(ctx, x1, y1, x2, y2, lineWidth=1, strokeStyle="black") {
 // draw osciliscope
 function osciliscope() {
     // https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Visualizations_with_Web_Audio_API
+    ctx.save();
     let bufferLength = analyserNode.frequencyBinCount;
     analyserNode.getByteTimeDomainData(audioData);
     let slice = canvasWidth / bufferLength;
     let x = 0;
+    ctx.strokeStyle = utils.makeColor(5,255,251);
 
     for (let i = 0; i < bufferLength; i++) {
         const v = audioData[i] / 128.0;
@@ -297,8 +300,38 @@ function osciliscope() {
     }
     ctx.lineTo(canvasWidth, canvasHeight / 2);
     ctx.stroke();
+    ctx.restore();
 }
+function drawStar(cx,cy,spikes,outerRadius,innerRadius){
+    ctx.save();
+    var rot=Math.PI/2*3;
+    var x=cx;
+    var y=cy;
+    var step=Math.PI/spikes;
 
+    ctx.beginPath();
+    ctx.moveTo(cx,cy-outerRadius)
+    for(i=0;i<spikes;i++){
+      x=cx+Math.cos(rot)*outerRadius;
+      y=cy+Math.sin(rot)*outerRadius;
+      ctx.lineTo(x,y)
+      rot+=step
+
+      x=cx+Math.cos(rot)*innerRadius;
+      y=cy+Math.sin(rot)*innerRadius;
+      ctx.lineTo(x,y)
+      rot+=step
+    }
+    ctx.lineTo(cx,cy-outerRadius);
+    ctx.closePath();
+    ctx.lineWidth=5;
+    ctx.strokeStyle='blue';
+    ctx.stroke();
+    ctx.fillStyle='skyblue';
+    ctx.fill();
+    
+    ctx.restore();
+  }
 
 
 export {setupCanvas,draw};
