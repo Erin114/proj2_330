@@ -56,14 +56,13 @@ function setupCanvas(canvasElement,analyserNodeRef){
         }
     }
     // create stars for bowling alley carpet theme
-    let aData = analyserNode.getByteFrequencyData(audioData);
     for (let i = 0; i < 31; i++) {
         //function drawStar(cx,cy,spikes,outerRadius,innerRadius)
         // x and y location
         let _x = Math.trunc(utils.getRandom(0,canvasWidth));
         let _y = Math.trunc(utils.getRandom(0,canvasHeight));
-        let _inner = aData[i];
-        let _outer = aData[i+3];
+        let _inner = audioData[i];
+        let _outer = audioData[i+3];
         let _spikes = 5;
 
         let s = {
@@ -75,6 +74,7 @@ function setupCanvas(canvasElement,analyserNodeRef){
         }
 
         stars.push(s);
+        console.log(s);
         if (i == 30) {
             starsCreated = true;
         }
