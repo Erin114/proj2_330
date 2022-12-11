@@ -2,10 +2,13 @@
 let audioCtx;
 
 // 2 - WebAudio nodes that are part of our WebAudio audio routing graph
-let element, sourceNode, analyserNode, gainNode, 
-distortionNode, delayNode, compressionNode, panNode;
+let element, sourceNode, analyserNode, distortionNode,delayNode, 
+compressionNode, gainNode, panNode;
 
-let nodeChain;
+let nodesEnabled = [false,false,false];
+
+let nodes = [distortionNode,delayNode,compressionNode];
+
 
 // 3 - here we are faking an enumeration
 const DEFAULTS = Object.freeze({
@@ -40,26 +43,67 @@ function setupWebAudio(filePath) {
     analyserNode.fftSize = DEFAULTS.numSamples;
     gainNode = audioCtx.createGain();
     gainNode.gain.value = DEFAULTS.gain;
-    distortionNode = audioCtx.createWaveShaper();
-    distortionNode.curve = makeDistortionCurve(DEFAULTS.curve)
-    distortionNode.oversample = DEFAULTS.oversample;
-    delayNode = audioCtx.createDelay(DEFAULTS.delaySecs);
+    nodes[0] = audioCtx.createWaveShaper();
+    nodes[0].curve = makeDistortionCurve(DEFAULTS.curve)
+    nodes[0].oversample = DEFAULTS.oversample;
+    nodes[1] = audioCtx.createDelay(DEFAULTS.delaySecs);
     panNode = audioCtx.createStereoPanner();
-    compressionNode = audioCtx.createDynamicsCompressor();
-    compressionNode.threshold.setValueAtTime(-50,audioCtx.currentTime);
-    compressionNode.knee.setValueAtTime(50,audioCtx.currentTime);
+    nodes[2] = audioCtx.createDynamicsCompressor();
+    nodes[2].threshold.setValueAtTime(-50,audioCtx.currentTime);
+    nodes[2].knee.setValueAtTime(50,audioCtx.currentTime);
     //node connections
-    sourceNode.connect(distortionNode);
-    distortionNode.connect(delayNode);
-    delayNode.connect(compressionNode);
-    compressionNode.connect(analyserNode);
+    sourceNode.connect(analyserNode);
+
     analyserNode.connect(panNode);
     panNode.connect(gainNode);
     gainNode.connect(audioCtx.destination);
+    distortionNode = nodes[0];
+    delayNode = nodes[1];
+    compressionNode = nodes[2];
 }
 
-function addNodeChain()
-{}
+function addNodeToChain(value)
+{
+    if (nodesEnabled[value] == false)
+    {
+        nodesEnabled[value] = true;
+        let prevConnection = sourceNode;
+        sourceNode.disconnect();
+        for (let i = 0; i < 3; i++)
+        {
+            if (nodesEnabled[i] == true)
+            {
+                prevConnection.connect(nodes[i]);
+                prevConnection = nodes[i];
+                prevConnection.disconnect();
+            }
+        }
+        prevConnection.connect(analyserNode);
+        
+    }
+}
+
+function removeNodeFromChain(value)
+{
+    if (nodesEnabled[value] == true)
+    {
+        nodesEnabled[value] = false;
+        let prevConnection = sourceNode;
+        sourceNode.disconnect();
+        for (let i = 0; i < 3; i++)
+        {
+            if (nodesEnabled[i] == true)
+            {
+                prevConnection.connect(nodes[i]);
+                prevConnection = nodes[i];
+                prevConnection.disconnect();
+            }
+        }
+        prevConnection.connect(analyserNode);
+        
+    }
+
+}
 
 function loadSoundFile(filePath) {
     element.src = filePath;
@@ -161,4 +205,4 @@ function getVolume()
 
 export {audioCtx, setupWebAudio, playCurrentSound, pauseCurrentSound, loadSoundFile, 
     setVolume, setOversample, setDelay, updateDistortionCurve, setPan, setRatio, 
-    setAttack, setDecay, getVolume, analyserNode};
+    setAttack, setDecay, getVolume, removeNodeFromChain, addNodeToChain, analyserNode};

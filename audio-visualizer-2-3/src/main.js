@@ -71,6 +71,9 @@ function setupUI(canvasElement){
     let ratio = document.querySelector("#ratio-slider");
     let attack = document.querySelector("#attack-slider");
     let decay = document.querySelector("#decay-slider");
+    let compCheckbox = document.querySelector("#chk-comp");
+    let delayCheckbox = document.querySelector("#chk-delay");
+    let distCheckbox = document.querySelector("#chk-dist");
 
     // Visual UI objects
     let gradientCheckbox = document.querySelector("#chk-gradient");
@@ -178,6 +181,44 @@ function setupUI(canvasElement){
     }
     // value of volume label to match initial slider value
     volumeSlider.dispatchEvent(new Event("input"));
+
+    
+    distCheckbox.onchange = e =>{
+        if (distCheckbox.checked == true)
+        {
+            audio.addNodeToChain(0);
+            console.log("add");
+        }
+        else
+        {
+            audio.removeNodeFromChain(0);
+            console.log("rem");
+        }
+    }
+    compCheckbox.onchange = e =>{
+        if (compCheckbox.checked == true)
+        {
+            audio.addNodeToChain(2);
+            console.log("add");
+        }
+        else
+        {
+            audio.removeNodeFromChain(2);
+            console.log("rem");
+        }
+    }
+    delayCheckbox.onchange = e =>{
+        if (delayCheckbox.checked == true)
+        {
+            audio.addNodeToChain(1);
+            console.log("add");
+        }
+        else
+        {
+            audio.removeNodeFromChain(1);
+            console.log("rem");
+        }
+    }
     
 
 
