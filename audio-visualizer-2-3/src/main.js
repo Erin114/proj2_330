@@ -61,6 +61,9 @@ function setupUI(canvasElement){
     const fsButton = document.querySelector("#fsButton");
     const playButton = document.querySelector("#play-button");
     const fileInput = document.querySelector("#file-input");
+
+    let fileSelect = document.querySelector("#file-selection");
+
     let volumeSlider = document.querySelector("#volume-slider");
     let volumeLabel = document.querySelector("#volume-label");
     let trackSelect = document.querySelector("#track-select");
@@ -126,6 +129,9 @@ function setupUI(canvasElement){
         if (playButton.dataset.playing == "yes") {
             playButton.dispatchEvent(new MouseEvent("click"));
         }
+    }
+    fileSelect.onchange = e => {
+        audio.loadSoundFile(URL.createObjectURL(e.target.files[0]));
     }
     // NOTE 1204 - Moss: I couldn't get user file upload working 
     // 1204: going to try again later using https://youtu.be/idhb45lc2xo?t=994
